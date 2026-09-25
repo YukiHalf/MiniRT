@@ -4,7 +4,8 @@ CC = cc
 CFLAGS = -Wextra -Wall 
 RM = rm -Rf
 
-SRCS = tuple_test.c test_main.c 
+SRCS = array_test.c test_main.c array_features.c \
+		float_features.c array_features_2.c
 OBJS = $(SRCS:.c=.o)
 
 
