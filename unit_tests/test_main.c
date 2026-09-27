@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 	exit_code = 0;
 
 	sumAr = add_arrs(p,p1);
-	
+
 	printf("%f %f %f %f\n",sumAr[0],sumAr[1],sumAr[2],sumAr[3]);
 	free(sumAr);
 	sumAr = subst_arr(p,p1);
@@ -27,8 +27,9 @@ int main(int argc, char** argv)
 	free(p1);
 	nega_arr(sumAr);
 	printf("%f %f %f %f\n",sumAr[0],sumAr[1],sumAr[2],sumAr[3]);
-	multy_arr(sumAr,0.5);
+	norm_arr(sumAr);
 	printf("%f %f %f %f\n",sumAr[0],sumAr[1],sumAr[2],sumAr[3]);
+	printf("%f\n",magn_arr(sumAr));
 	free(sumAr);
 	return(exit_code);
 }

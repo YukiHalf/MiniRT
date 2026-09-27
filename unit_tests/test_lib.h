@@ -21,6 +21,10 @@ float	*subst_arr(float *arr, float *arr2);
 float 	*nega_arr(float *arr);
 /*multiplies the arr with x uniformily*/
 float	*multy_arr(float *arr, float x);
-/*/*divide the arr with x uniformily*/*/
-float	*div_arr(float *arr, float x)
+/*/*divide the arr with x uniformily*/
+float	*div_arr(float *arr, float x);
+/*find the magnitute of an array, this meand the distance you would have to travel*/
+float magn_arr(float *arr);
+/*We are taking an arbitrary vector and converting it into a unit vector.*/
+float *norm_arr(float *arr);
 #endif
