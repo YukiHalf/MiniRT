@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:49 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 13:21:39 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/28 13:25:07 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,42 @@ typedef struct tuple_s
 
 typedef struct projectile_s
 {
-	tuple_t	position;
-	tuple_t	velocity;
-}			projectile_t;
+	t_tuple	position;
+	t_tuple	velocity;
+}			t_projectile;
 
 typedef struct enviroment_s
 {
-	tuple_t	gravity;
-	tuple_t	wind;
-}			enviroment_t;
+	t_tuple	gravity;
+	t_tuple	wind;
+}			t_enviroment;
 
 /*creates and alocates a point and returns it's address*/
-tuple_t		init_point(double x, double y, double z);
+t_tuple		init_point(double x, double y, double z);
 /*creates and alocates a vector and returns it's address*/
-tuple_t		init_vector(double x, double y, double z);
+t_tuple		init_vector(double x, double y, double z);
 /*creates a new array, that has the parameters as values*/
-tuple_t		*create_tup(float a, float b, float c, float d);
+t_tuple		*create_tup(float a, float b, float c, float d);
 /*checks if two float parameters are equal under a marign of error(epsilon)*/
 bool		f_equality(float a, float b, float epsilon);
 /*adds two arrays togherter while respecting the point,vector scenario*/
-tuple_t		add_tup(tuple_t arr, tuple_t arr2);
+t_tuple		add_tup(t_tuple arr, t_tuple arr2);
 /*substitutes two arrays togherter while respecting the point,vector scenario*/
-tuple_t		subst_tup(tuple_t arr, tuple_t arr2);
+t_tuple		subst_tup(t_tuple arr, t_tuple arr2);
 /*negates a array*/
-void		nega_tup(tuple_t *arr);
+void		nega_tup(t_tuple *arr);
 /*multiplies the arr with x uniformily*/
-void		multy_tup(tuple_t *arr, float x);
-/*/*divide the arr with x uniformily*/
-void		div_tup(tuple_t *arr, float x);
+void		multy_tup(t_tuple *arr, float x);
+/*divide the arr with x uniformily*/
+void		div_tup(t_tuple *arr, float x);
 /*find the magnitute of an array,
 	this meand the distance you would have to travel*/
-double		magn_tuple(tuple_t arr);
+double		magn_tuple(t_tuple arr);
 /*We are taking an arbitrary vector and converting it into a unit vector.*/
-tuple_t		norm_tup(tuple_t arr);
+t_tuple		norm_tup(t_tuple arr);
 /*Dot function take stwo arr and returns a scalar value*/
-double		dot_tup(tuple_t arr1, tuple_t arr2);
+double		dot_tup(t_tuple arr1, t_tuple arr2);
 /*returns another vector instead of a scalar.*/
-tuple_t		cross_arr(tuple_t arr1, tuple_t arr2);
+t_tuple		cross_arr(t_tuple arr1, t_tuple arr2);
 
 #endif

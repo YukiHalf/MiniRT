@@ -12,9 +12,9 @@
 
 #include "test_lib.h"
 
-tuple_t	init_point(double x, double y, double z)
+t_tuple	init_point(double x, double y, double z)
 {
-	tuple_t	tup;
+	t_tuple	tup;
 
 	tup.x = x;
 	tup.y = y;
@@ -23,9 +23,9 @@ tuple_t	init_point(double x, double y, double z)
 	return (tup);
 }
 
-tuple_t	init_vector(double x, double y, double z)
+t_tuple	init_vector(double x, double y, double z)
 {
-	tuple_t	tup;
+	t_tuple	tup;
 
 	tup.x = x;
 	tup.y = y;
@@ -34,11 +34,11 @@ tuple_t	init_vector(double x, double y, double z)
 	return (tup);
 }
 
-tuple_t	*create_tup(float a, float b, float c, float d)
+t_tuple	*create_tup(float a, float b, float c, float d)
 {
-	tuple_t	*arr;
+	t_tuple	*arr;
 
-	arr = malloc(sizeof(tuple_t));
+	arr = malloc(sizeof(t_tuple));
 	if (!arr)
 	{
 		ft_putendl_fd("Malloc failed!", STDERR_FILENO);

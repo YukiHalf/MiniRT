@@ -12,9 +12,9 @@
 
 #include "test_lib.h"
 
-tuple_t	cross_arr(tuple_t arr1, tuple_t arr2)
+t_tuple	cross_arr(t_tuple arr1, t_tuple arr2)
 {
-	tuple_t	new_tup;
+	t_tuple	new_tup;
 	double	x;
 	double	y;
 	double	z;
@@ -26,7 +26,7 @@ tuple_t	cross_arr(tuple_t arr1, tuple_t arr2)
 	return (new_tup);
 }
 
-double	dot_tup(tuple_t arr1, tuple_t arr2)
+double	dot_tup(t_tuple arr1, t_tuple arr2)
 {
 	double	dot;
 
@@ -37,7 +37,7 @@ double	dot_tup(tuple_t arr1, tuple_t arr2)
 	return (dot);
 }
 
-tuple_t	norm_tup(tuple_t arr)
+t_tuple	norm_tup(t_tuple arr)
 {
 	double	magnitute;
 
@@ -49,7 +49,7 @@ tuple_t	norm_tup(tuple_t arr)
 	return (arr);
 }
 
-double	magn_tuple(tuple_t arr)
+double	magn_tuple(t_tuple arr)
 {
 	double	magnitute;
 
@@ -58,7 +58,7 @@ double	magn_tuple(tuple_t arr)
 	return (magnitute);
 }
 
-void	div_tup(tuple_t *arr, float x)
+void	div_tup(t_tuple *arr, float x)
 {
 	arr->x /= x;
 	arr->y /= x;

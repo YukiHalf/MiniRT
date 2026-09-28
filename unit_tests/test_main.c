@@ -16,14 +16,14 @@ int	main(int argc, char **argv)
 {
 	int				exit_code;
 	float			epsilon;
-	projectile_t	*p;
-	enviroment_t	*e;
+	t_projectile	*p;
+	t_enviroment	*e;
 	int				i;
-	tuple_t			*tmp_pos;
-	tuple_t			*tmp_vel;
+	t_tuple			*tmp_pos;
+	t_tuple			*tmp_vel;
 
-	p = malloc(sizeof(projectile_t));
-	e = malloc(sizeof(enviroment_t));
+	p = malloc(sizeof(t_projectile));
+	e = malloc(sizeof(t_enviroment));
 	p->position = init_point(0, 1, 0);
 	p->velocity = init_vector(1, 1, 0);
 	norm_tup(p->velocity);

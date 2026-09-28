@@ -12,7 +12,7 @@
 
 #include "test_lib.h"
 
-void	nega_tup(tuple_t *arr)
+void	nega_tup(t_tuple *arr)
 {
 	arr->x *= -1;
 	arr->y *= -1;
@@ -20,7 +20,7 @@ void	nega_tup(tuple_t *arr)
 	arr->w *= -1;
 }
 
-void	multy_tup(tuple_t *arr, float x)
+void	multy_tup(t_tuple *arr, float x)
 {
 	arr->x *= x;
 	arr->y *= x;
@@ -28,9 +28,9 @@ void	multy_tup(tuple_t *arr, float x)
 	arr->w *= x;
 }
 
-tuple_t	subst_tup(tuple_t arr, tuple_t arr2)
+t_tuple	subst_tup(t_tuple arr, t_tuple arr2)
 {
-	tuple_t	new_arr;
+	t_tuple	new_arr;
 
 	new_arr.x = arr.x - arr2.x;
 	new_arr.y = arr.y - arr2.y;
@@ -39,9 +39,9 @@ tuple_t	subst_tup(tuple_t arr, tuple_t arr2)
 	return (new_arr);
 }
 
-tuple_t	add_tup(tuple_t arr, tuple_t arr2)
+t_tuple	add_tup(t_tuple arr, t_tuple arr2)
 {
-	tuple_t	new_arr;
+	t_tuple	new_arr;
 
 	new_arr.x = arr.x + arr2.x;
 	new_arr.y = arr.y + arr2.y;
