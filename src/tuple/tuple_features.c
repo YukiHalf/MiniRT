@@ -6,12 +6,12 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:15 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 13:19:38 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/28 14:01:00 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_lib.h"
-
+#include "tuple.h"
+#include <math.h>
 void	nega_tup(t_tuple *arr)
 {
 	arr->x *= -1;
@@ -20,7 +20,7 @@ void	nega_tup(t_tuple *arr)
 	arr->w *= -1;
 }
 
-void	multy_tup(t_tuple *arr, float x)
+void	multy_tup(t_tuple *arr, double x)
 {
 	arr->x *= x;
 	arr->y *= x;

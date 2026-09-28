@@ -6,18 +6,15 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:20 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 13:19:36 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/28 14:01:13 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_lib.h"
-
+#include "tuple.h"
+#include <math.h>
 t_tuple	cross_arr(t_tuple arr1, t_tuple arr2)
 {
 	t_tuple	new_tup;
-	double	x;
-	double	y;
-	double	z;
 
 	new_tup = init_vector(0, 0, 0);
 	new_tup.x = (arr1.y * arr2.z) - (arr1.z * arr2.y);
@@ -30,6 +27,7 @@ double	dot_tup(t_tuple arr1, t_tuple arr2)
 {
 	double	dot;
 
+	dot = 0;
 	dot += arr1.x * arr2.x;
 	dot += arr1.y * arr2.y;
 	dot += arr1.z * arr2.z;
@@ -41,7 +39,7 @@ t_tuple	norm_tup(t_tuple arr)
 {
 	double	magnitute;
 
-	magnitute = magn_arr(arr);
+	magnitute = magn_tup(arr);
 	arr.x /= magnitute;
 	arr.y /= magnitute;
 	arr.z /= magnitute;
@@ -49,7 +47,7 @@ t_tuple	norm_tup(t_tuple arr)
 	return (arr);
 }
 
-double	magn_tuple(t_tuple arr)
+double	magn_tup(t_tuple arr)
 {
 	double	magnitute;
 
@@ -58,7 +56,7 @@ double	magn_tuple(t_tuple arr)
 	return (magnitute);
 }
 
-void	div_tup(t_tuple *arr, float x)
+void	div_tup(t_tuple *arr, double x)
 {
 	arr->x /= x;
 	arr->y /= x;

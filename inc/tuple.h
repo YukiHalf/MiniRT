@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_lib.h                                         :+:      :+:    :+:   */
+/*   tuple.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:49 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 13:25:07 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/28 13:58:01 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_LIB_H
-# define TEST_LIB_H
+#ifndef TUPLE_H
+# define TUPLE_H
 
-# include "../inc/libft/libft.h"
-# include <fcntl.h>
-# include <math.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
+# include "libft.h"
 
 typedef enum e_tuples_enum
 {
@@ -46,6 +41,7 @@ typedef struct enviroment_s
 	t_tuple	wind;
 }			t_enviroment;
 
+
 /*creates and alocates a point and returns it's address*/
 t_tuple		init_point(double x, double y, double z);
 /*creates and alocates a vector and returns it's address*/
@@ -61,12 +57,12 @@ t_tuple		subst_tup(t_tuple arr, t_tuple arr2);
 /*negates a array*/
 void		nega_tup(t_tuple *arr);
 /*multiplies the arr with x uniformily*/
-void		multy_tup(t_tuple *arr, float x);
+void		multy_tup(t_tuple *arr, double x);
 /*divide the arr with x uniformily*/
-void		div_tup(t_tuple *arr, float x);
+void		div_tup(t_tuple *arr, double x);
 /*find the magnitute of an array,
 	this meand the distance you would have to travel*/
-double		magn_tuple(t_tuple arr);
+double		magn_tup(t_tuple arr);
 /*We are taking an arbitrary vector and converting it into a unit vector.*/
 t_tuple		norm_tup(t_tuple arr);
 /*Dot function take stwo arr and returns a scalar value*/
