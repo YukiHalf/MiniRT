@@ -1,56 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tuple_features_3.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/28 13:19:20 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/09/28 13:19:36 by sdarius-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "test_lib.h"
 
-tuple_t *cross_arr(tuple_t *arr1,tuple_t *arr2)
+tuple_t	cross_arr(tuple_t arr1, tuple_t arr2)
 {
-	tuple_t *new_tup;
-	double x;
-	double y;
-	double z;
+	tuple_t	new_tup;
+	double	x;
+	double	y;
+	double	z;
 
-	new_tup = init_vector(0,0,0);
-
-	new_tup->x  = (arr1->y * arr2->z) - (arr1->z * arr2->y);
-	new_tup->y  = (arr1->z * arr2->x) - (arr1->x * arr2->z);
-	new_tup->z  = (arr1->x * arr2->y) - (arr1->y * arr2->x);
+	new_tup = init_vector(0, 0, 0);
+	new_tup.x = (arr1.y * arr2.z) - (arr1.z * arr2.y);
+	new_tup.y = (arr1.z * arr2.x) - (arr1.x * arr2.z);
+	new_tup.z = (arr1.x * arr2.y) - (arr1.y * arr2.x);
 	return (new_tup);
 }
 
-
-double dot_tup(tuple_t *arr1,tuple_t *arr2)
+double	dot_tup(tuple_t arr1, tuple_t arr2)
 {
-	double dot;
+	double	dot;
 
-
-	dot += arr1->x * arr2->x;
-	dot += arr1->y * arr2->y;
-	dot += arr1->z * arr2->z;
-	dot += arr1->w * arr2->w;
-	return dot;
+	dot += arr1.x * arr2.x;
+	dot += arr1.y * arr2.y;
+	dot += arr1.z * arr2.z;
+	dot += arr1.w * arr2.w;
+	return (dot);
 }
 
-
-
-tuple_t*  norm_tup(tuple_t *arr)
+tuple_t	norm_tup(tuple_t arr)
 {
-	double magnitute;
+	double	magnitute;
 
 	magnitute = magn_arr(arr);
-	arr->x /= magnitute;
-	arr->y /= magnitute;
-	arr->z /= magnitute;
-	arr->w /= magnitute;
-	return(arr);
+	arr.x /= magnitute;
+	arr.y /= magnitute;
+	arr.z /= magnitute;
+	arr.w /= magnitute;
+	return (arr);
 }
 
-
-double magn_tuple(tuple_t *arr)
+double	magn_tuple(tuple_t arr)
 {
-	double magnitute;
+	double	magnitute;
 
-	magnitute = sqrt((arr->x * arr->x) + (arr->y * arr->y)+(arr->z * arr->z)+(arr->w * arr->w));
+	magnitute = sqrt((arr.x * arr.x) + (arr.y * arr.y) + (arr.z * arr.z)
+			+ (arr.w * arr.w));
 	return (magnitute);
 }
-
 
 void	div_tup(tuple_t *arr, float x)
 {
