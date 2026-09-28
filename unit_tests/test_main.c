@@ -4,32 +4,32 @@
 int main(int argc, char** argv)
 {
 	int exit_code;
-	float *p;
-	float *p1;
-	float *sumAr;
 	float epsilon;
 
-	epsilon = (float)1 / 1048576;
+	projectile_t *p;
+	enviroment_t *e;
 
-	p = create_arr(3,2,1,0);
-	p1= create_arr(5,6,7,1);
+	p = malloc(sizeof(projectile_t));
+	e = malloc(sizeof(enviroment_t));
 
+	p->position = init_point(0,1,0);
+	p->velocity = norm_tup(init_vector(1,1,0));
 
-	exit_code = 0;
+	e->gravity = init_vector(0,-0.1,0);
+	e->wind = init_vector(-0.01,0,0);
 
-	sumAr = add_arrs(p,p1);
+	int i = 0;
+	tuple_t *tmp_pos;
+	tuple_t *tmp_vel;
+	while(p->position->y >= 0)
+	{
+		p.position = add_tup(*p->position,*p->velocity)
+		*p->velocity =
 
-	printf("%f %f %f %f\n",sumAr[0],sumAr[1],sumAr[2],sumAr[3]);
-	free(sumAr);
-	sumAr = subst_arr(p,p1);
-	printf("%f %f %f %f\n",sumAr[0],sumAr[1],sumAr[2],sumAr[3]);
-	free(p);
-	free(p1);
-	nega_arr(sumAr);
-	printf("%f %f %f %f\n",sumAr[0],sumAr[1],sumAr[2],sumAr[3]);
-	norm_arr(sumAr);
-	printf("%f %f %f %f\n",sumAr[0],sumAr[1],sumAr[2],sumAr[3]);
-	printf("%f\n",magn_arr(sumAr));
-	free(sumAr);
+		printf("%f %f %f\n",p->position->x,p->position->y,p->position->z);
+		i++;
+	}
+	printf("Total ticks: %d\n",i);
+
 	return(exit_code);
 }
