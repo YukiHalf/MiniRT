@@ -21,7 +21,13 @@ SRCS = src/tuple/tuple_features.c \
 	src/tuple/tuple_features_2.c \
 	src/tuple/tuple_features_3.c \
 	src/color/color_feature.c \
-	src/scene/scene_features.c
+	src/scene/scene_features.c \
+	src/app.c \
+	src/error.c \
+	src/hooks.c \
+	src/pixel.c \
+	src/render.c \
+	src/shade.c
 
 MAIN = src/main.c
 
