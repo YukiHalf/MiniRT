@@ -3,3 +3,7 @@ inc/MLX42
 .vscode
 .DS_STORE
 *.d
+MLX42
+libft
+unit_tests
+minirt

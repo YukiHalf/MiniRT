@@ -6,10 +6,14 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:19:14 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/29 10:19:32 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/29 11:39:27 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 
 
+char *scene_to_ppm(t_scene s)
+{
+	
+}

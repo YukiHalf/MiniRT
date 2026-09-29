@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
+/*   mlx_f.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/29 11:57:20 by sdarius-         ###   ########.fr       */
+/*   Created: 2026/09/29 11:47:30 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/09/29 11:58:04 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuple.h"
-#include <stdio.h>
-#include "color.h"
-#include <stdlib.h>
-#include "scene.h"
-#include "mlx_f.h"
+#ifndef MLX_F_H
+#define MLX_F_H
 
-int	main(int argc, char **argv)
-{
-	t_scene *scene;
+#include "MLX42.h"
+/*Start up all the prosess needed for mlx, and has some error checks. prints errors and returns -1. Returns 1 on success*/
+int 	inti_mlx(mlx_t *mlx, mlx_image_t* image);
 
-	scene = malloc(sizeof(*scene));
 
-	inti_mlx(scene->mlx,scene->image);
-
-	return (0);
-}
+#endif
