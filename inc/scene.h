@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
+/*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/29 10:25:27 by sdarius-         ###   ########.fr       */
+/*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/09/29 10:29:21 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuple.h"
-#include <stdio.h>
-#include "color.h"
-#include <stdlib.h>
-#include "scene.h"
-int	main(int argc, char **argv)
+#ifndef SCENE_H
+#define SCENE_H
+#include "MLX42/include/MLX42/MLX42.h"
+
+#define WIDTH 512
+#define HEIGHT 512
+
+typedef struct scene_s
 {
-	t_scene *scene;
+	mlx_t* mlx;
+	mlx_image_t* image;
+}	t_scene;
 
-	scene = malloc(sizeof(*scene));
 
-
-
-	if(!(scene->mlx = mlx_init(WIDTH,HEIGHT,"miniRT",false)))
-		//trow error cleanup and exit
-
-	return (0);
-}
+#endif

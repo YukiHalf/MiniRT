@@ -1,30 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
+/*   scene_features.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/29 10:25:27 by sdarius-         ###   ########.fr       */
+/*   Created: 2026/09/29 10:19:14 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/09/29 10:19:32 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuple.h"
-#include <stdio.h>
-#include "color.h"
-#include <stdlib.h>
 #include "scene.h"
-int	main(int argc, char **argv)
-{
-	t_scene *scene;
-
-	scene = malloc(sizeof(*scene));
 
 
-
-	if(!(scene->mlx = mlx_init(WIDTH,HEIGHT,"miniRT",false)))
-		//trow error cleanup and exit
-
-	return (0);
-}
