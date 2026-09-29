@@ -40,7 +40,7 @@ LIBFT_DIR = inc/libft
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(MAIN_OBJS) $(LIBFT) | $(MLX42_LIB)
+$(NAME): $(OBJS) $(MAIN_OBJS) $(LIBFT) $(MLX42_LIB)
 	$(CC) $(CFLAGS) $(MAIN_OBJS) $(OBJS) $(LIBS) -o $(NAME)
 
 $(LIBFT):
@@ -58,9 +58,11 @@ $(MLX42_LIB):
 	fi
 	@echo "$(COLOR_GREEN)MLX42 ready$(COLOR_RESET)"
 
-test: $(OBJS) $(TEST_OBJS) $(LIBFT) | $(MLX42_LIB)
+test: $(OBJS) $(TEST_OBJS) $(LIBFT) $(MLX42_LIB)
 	$(CC) $(CFLAGS) $(TEST_OBJS) $(OBJS)  $(LIBS) -o $(TEST_NAME)
 	./$(TEST_NAME)
+
+$(OBJS) $(MAIN_OBJS) $(TEST_OBJS): | $(MLX42_LIB)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) $(INC_LIB) -c $< -o $@
