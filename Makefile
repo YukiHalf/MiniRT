@@ -31,6 +31,7 @@ TEST_SRC = test/test_main.c
 OBJS = $(SRCS:.c=.o)
 MAIN_OBJS = $(MAIN:.c=.o)
 TEST_OBJS = $(TEST_SRC:.c=.o)
+DEPS = $(OBJS:.o=.d) $(MAIN_OBJS:.o=.d) $(TEST_OBJS:.o=.d)
 
 INC_LIB = -I$(LIBFT_DIR)/
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -39,7 +40,7 @@ LIBFT_DIR = inc/libft
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(MAIN_OBJS) $(LIBFT) $(MLX42_LIB)
+$(NAME): $(OBJS) $(MAIN_OBJS) $(LIBFT) | $(MLX42_LIB)
 	$(CC) $(CFLAGS) $(MAIN_OBJS) $(OBJS) $(LIBS) -o $(NAME)
 
 $(LIBFT):
@@ -57,7 +58,7 @@ $(MLX42_LIB):
 	fi
 	@echo "$(COLOR_GREEN)MLX42 ready$(COLOR_RESET)"
 
-test: $(OBJS) $(TEST_OBJS) $(LIBFT) $(MLX42_LIB)
+test: $(OBJS) $(TEST_OBJS) $(LIBFT) | $(MLX42_LIB)
 	$(CC) $(CFLAGS) $(TEST_OBJS) $(OBJS)  $(LIBS) -o $(TEST_NAME)
 	./$(TEST_NAME)
 
@@ -65,7 +66,7 @@ test: $(OBJS) $(TEST_OBJS) $(LIBFT) $(MLX42_LIB)
 	$(CC) $(CFLAGS) $(INCLUDES) $(INC_LIB) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS) $(MAIN_OBJS) $(TEST_OBJS)
+	$(RM) $(OBJS) $(MAIN_OBJS) $(TEST_OBJS) $(DEPS)
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
@@ -77,5 +78,7 @@ re: fclean
 	$(MAKE) all
 
 .PHONY: all clean fclean re
+
+-include $(DEPS)
 
 

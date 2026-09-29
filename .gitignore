@@ -2,3 +2,4 @@ inc/MLX42
 *.o
 .vscode
 .DS_STORE
+*.d
