@@ -6,12 +6,11 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 12:13:56 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 11:41:56 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/30 11:44:18 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "matrix.h"
-#include <stdio.h>
 
 t_mat4	init_m4(const double a[static 4][4])
 {
@@ -106,8 +105,6 @@ t_mat4	multy_m4(const double a[static 4][4], const double b[static 4][4])
 		col = 0;
 		while (col < 4)
 		{
-			printf("m%d.%d\n%f * %f\n + %f *%f\n + %f * %f\n + %f * %f\n",row,col,a[row][0] ,b[0][col] ,a[row][1], b[1][col]
-				,a[row][2],b[2][col],a[row][3],b[col][3]);
 			result.m[row][col] = a[row][0] * b[0][col] + a[row][1] * b[1][col]
 				+ a[row][2] * b[2][col] + a[row][3] * b[3][col];
 			col++;

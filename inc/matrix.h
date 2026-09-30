@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 12:13:28 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 11:15:24 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/30 11:50:47 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdbool.h>
 #include <sys/types.h>
 #include "math_local.h"
+#include "tuple.h"
 
 typedef struct s_mat2
 {
@@ -41,4 +42,6 @@ t_mat2	init_m2(const double a[static 2][2]);
 bool	is_matrix_equal(size_t size, const double a[size][size],const double b[size][size]);
 /*multiplies two 4x4 matrices, then returns the result as a value*/
 t_mat4	multy_m4(const double a[static 4][4], const double b[static 4][4]);
+/*multiplies a tup with a marice, then returns the result as a t_tuple value*/
+t_tuple	multy_m4_tup(const double m[static 4][4], const t_tuple t);
 #endif
