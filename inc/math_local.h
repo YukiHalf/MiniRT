@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   float_features.c                                   :+:      :+:    :+:   */
+/*   math_local.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/28 13:20:30 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 13:20:57 by sdarius-         ###   ########.fr       */
+/*   Created: 2026/09/30 10:41:23 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/09/30 10:48:14 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_lib.h"
+#ifndef MATH_LOCAL_H
+#define MATH_LOCAL_H
 
-bool	f_equality(float a, float b, float epsilon)
-{
-	float	sum;
+#include <math.h>
+#include <stdbool.h>
 
-	sum = a - b;
-	return (fabs(sum) < epsilon);
-}
+#define EPSILON 1e-5
+
+
+bool	d_equality(double a, double b);
+
+
+#endif

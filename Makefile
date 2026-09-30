@@ -23,7 +23,8 @@ SRCS = src/tuple/tuple_features.c \
 	src/color/color_feature.c \
 	src/scene/scene_features.c \
 	src/matrix/matrix_features.c \
-	src/mlx/mlx_features.c
+	src/mlx/mlx_features.c \
+	src/math/double_features.c
 MAIN = src/main.c
 
 TEST_SRC = test/test_main.c
