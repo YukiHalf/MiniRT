@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 12:13:28 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 11:50:47 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:22:52 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,12 @@ bool	is_matrix_equal(size_t size, const double a[size][size],const double b[size
 t_mat4	multy_m4(const double a[static 4][4], const double b[static 4][4]);
 /*multiplies a tup with a marice, then returns the result as a t_tuple value*/
 t_tuple	multy_m4_tup(const double m[static 4][4], const t_tuple t);
+/*create a indentity matrice and returns it by value*/
+t_mat4	init_identy_m4(void);
+/*returns basicaly the given matrix back, book says is important so well see*/
+t_mat4	multy_m4_identy(const double m[static 4][4]);
+/*transposes a 4x4 matrix, baisicaly the row becomes the col and so on kinda*/
+t_mat4	transpose_m4(const double m[static 4][4]);
+/*calculates the determinant of a 2x2 matrix*/
+double	deter_m2(const double m[static 2][2]);
 #endif

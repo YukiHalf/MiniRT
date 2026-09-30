@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 11:54:16 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:25:45 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,14 @@ int	main(int argc, char **argv)
 		int k =0;
 		while(k < 4)
 		{
-			a.m[i][k] = 2;
-			b.m[i][k] = 2;
+			a.m[i][k] = i;
+			b.m[i][k] = i;
 			k++;
 		}
 		i++;
 	}
 	//printf("%s ",is_matrix_equal(4,a.m,b.m) ? "true" : "false");
-	t_tuple tup = init_vector(5,3,1);
-
-
-	tup =multy_m4_tup(a.m,tup);
-
-	printf("%f\n%f\n%f\n%f\n",tup.x,tup.y,tup.z,tup.w);
-
-
-
+	t_mat2 m = init_m2((double[2][2]){{1,5},{-3,2}});
+	printf("%f",deter_m2(m.m));
 	return (0);
 }
