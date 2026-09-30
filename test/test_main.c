@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 11:03:51 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/30 11:20:50 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@
 #include "mlx_f.h"
 #include "matrix.h"
 
+void DEBUG_print_matrice(size_t size, double m[static size][size])
+{
+	for(int i = 0;i < size;i++)
+	{
+		for(int k = 0;k < size;k++)
+		{
+			printf("%6.0f ",m[i][k]);
+		}
+		printf("\n");
+	}
+}
+
+
 
 int	main(int argc, char **argv)
 {
@@ -27,14 +40,14 @@ int	main(int argc, char **argv)
 
 	inti_mlx(scene->mlx,scene->image);
 
-	t_mat2 a;
-	t_mat2 b;
+	t_mat4 a;
+	t_mat4 b;
 
 	int i = 0;
-	while( i < 2)
+	while( i < 4)
 	{
 		int k =0;
-		while(k < 2)
+		while(k < 4)
 		{
 			a.m[i][k] = i;
 			b.m[i][k] = k;
@@ -42,7 +55,16 @@ int	main(int argc, char **argv)
 		}
 		i++;
 	}
-	printf("%s ",is_matrix_equal(2,a.m,b.m) ? "true" : "false");
+	//printf("%s ",is_matrix_equal(4,a.m,b.m) ? "true" : "false");
+
+	t_mat4 res = multy_m4(a.m,b.m);
+
+	DEBUG_print_matrice(4,a.m);
+	printf("-------a------\n");
+	DEBUG_print_matrice(4,b.m);
+		printf("-------b------\n");
+	DEBUG_print_matrice(4,res.m);
+
 
 	return (0);
 }

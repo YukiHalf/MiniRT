@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 12:13:28 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 10:55:09 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/09/30 11:15:24 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ t_mat3	init_m3(const double a[static 3][3]);
 t_mat2	init_m2(const double a[static 2][2]);
 /*checks if two same size matrix are equal.*/
 bool	is_matrix_equal(size_t size, const double a[size][size],const double b[size][size]);
-
+/*multiplies two 4x4 matrices, then returns the result as a value*/
+t_mat4	multy_m4(const double a[static 4][4], const double b[static 4][4]);
 #endif
