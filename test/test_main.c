@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 14:04:13 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 14:07:58 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,17 @@ void DEBUG_print_tuple(t_tuple tup)
 }
 
 
+void make_circle(t_scene *scene,t_rgb color)
+{
+	t_mat4 m;
 
+	m = init_identy_m4();
+	int i =0;
+	while( i < 4)
+	{
+		write_pixel_mlx(scene->image,color,deter_m4())
+	}
+}
 
 
 int	main(int argc, char **argv)
@@ -51,7 +61,7 @@ int	main(int argc, char **argv)
 
 	scene = malloc(sizeof(*scene));
 	init_mlx(scene);
-	write_pixel_mlx(scene->image,c,64,64);
+
 	mlx_loop(scene->mlx);
 	mlx_terminate(scene->mlx);
 	free(scene);
