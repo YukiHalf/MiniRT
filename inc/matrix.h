@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 12:13:28 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 11:19:06 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 12:26:22 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,12 @@ double	minor_m4(const double m[static 4][4], int row, int col);
 bool is_invertible_m4(const double m[static 4][4]);
 /*inverts the marice m4*/
 t_mat4	inverse_m4(const double m[static 4][4]);
+/*returns by value a m4 translation*/
+t_mat4	init_translation(double x, double y, double z);
+/*returns by value a m4 scaling*/
+t_mat4 init_scaling(double x,double y,double z);
+/*returns by value a rotation matrice for x axis*/
+t_mat4	rotation_x(double radians);
+/*returns by value a rotaion matrice for y axis*/
+t_mat4	rotation_y(double radians);
 #endif

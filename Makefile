@@ -26,6 +26,7 @@ SRCS = src/tuple/tuple_features.c \
 	src/matrix/matrix_features_2.c \
 	src/matrix/matrix_features_3.c \
 	src/matrix/matrix_features_4.c \
+	src/matrix/matrix_features_5.c \
 	src/mlx/mlx_features.c \
 	src/math/double_features.c
 MAIN = src/main.c
