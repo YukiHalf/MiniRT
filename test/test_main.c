@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 14:07:58 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 16:14:46 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 #include "mlx_f.h"
 #include "scene.h"
 #include "tuple.h"
+#include <scene.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <scene.h>
+
 void	DEBUG_print_matrice(size_t size, double m[static size][size])
 {
 	for (int i = 0; i < size; i++)
@@ -31,37 +32,55 @@ void	DEBUG_print_matrice(size_t size, double m[static size][size])
 	printf("\n");
 }
 
-void DEBUG_print_tuple(t_tuple tup)
+void	DEBUG_print_tuple(t_tuple tup)
 {
-	printf("%f %f %f %f\n",tup.x,tup.y,tup.z, tup.w);
+	printf("%f %f %f %f\n", tup.x, tup.y, tup.z, tup.w);
 }
 
-
-void make_circle(t_scene *scene,t_rgb color)
+void	draw_point(t_scene *scene, t_tuple point, t_rgb c)
 {
-	t_mat4 m;
+	double	x;
+	double	y;
 
-	m = init_identy_m4();
-	int i =0;
-	while( i < 4)
+	x = round(scene->image->height / 2 + point.x * 10);
+	y = round(scene->image->width / 2 - point.z * 10);
+	if (x < 0 || x >= scene->image->width)
+		return ;
+	if (y < 0 || y >= scene->image->height)
+		return ;
+	write_pixel_mlx(scene->image, c, (uint32_t)x, (uint32_t)y);
+}
+
+void	make_circle(t_scene *scene, t_rgb color)
+{
+	t_mat4	r;
+	t_tuple	p;
+	int		i;
+
+	r = rotation_y((3 * M_PI / 6)/ 2);
+	p = init_point(0, 0, 1);
+	i = 0;
+	while (i < 12)
 	{
-		write_pixel_mlx(scene->image,color,deter_m4())
+		DEBUG_print_tuple(p);
+		printf("\n");
+		draw_point(scene, p, color);
+		p = multy_m4_tup(r.m, p);
+		i++;
 	}
 }
-
 
 int	main(int argc, char **argv)
 {
 	t_scene	*scene;
-	t_rgb c;
+	t_rgb	c;
 
 	c.r = 1;
 	c.g = 1;
 	c.b = 1;
-
 	scene = malloc(sizeof(*scene));
 	init_mlx(scene);
-
+	make_circle(scene, c);
 	mlx_loop(scene->mlx);
 	mlx_terminate(scene->mlx);
 	free(scene);

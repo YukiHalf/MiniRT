@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 11:48:02 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 14:00:18 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 16:05:12 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	init_mlx(t_scene *scene)
 		ft_putendl_fd(mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (-1);
 	}
-	scene->image = mlx_new_image(scene->mlx, 128, 128); // hard coded for the moment
+	scene->image = mlx_new_image(scene->mlx, 512,512); // hard coded for the moment
 	if (!scene->image)
 	{
 		mlx_close_window(scene->mlx);
