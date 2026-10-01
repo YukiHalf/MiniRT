@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 12:27:31 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 15:07:15 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 10:07:11 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ double	minor_m3(const double m[static 3][3], int row, int col)
 	return (deter_m2(submatrix_m3_t_m2(m, row, col).m));
 }
 
-#include <stdio.h>
-
 double	cofractor_m3(const double m[static 3][3], int row, int col)
 {
 	int	i;
@@ -68,4 +66,19 @@ double	cofractor_m3(const double m[static 3][3], int row, int col)
 	else
 		i = -1;
 	return (minor_m3(m, row, col) * i);
+}
+double	deter_m3(const double m[static 3][3])
+{
+	double	deter;
+	int		i;
+	int		k;
+
+	i = 0;
+	deter = 0;
+	while (i < 3)
+	{
+		deter += m[0][i] * cofractor_m3(m, 0, i);
+		i++;
+	}
+	return (deter);
 }

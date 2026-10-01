@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 12:13:28 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 15:01:45 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 11:19:06 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include "math_local.h"
 #include "tuple.h"
+#include "libft.h"
 
 typedef struct s_mat2
 {
@@ -60,4 +61,16 @@ t_mat3	submatrix_m4_t_m3(const double m[static 4][4], int row, int col);
 double minor_m3(const double m[static 3][3],int row,int col);
 /*returns the minor but if row + col odd then it negates the result*/
 double cofractor_m3(const double m[static 3][3],int row,int col);
+/*returns the determinant of a 3x3 matrice*/
+double deter_m3(const double m[static 3][3]);
+/*returns the determinant of a 4x4 matice*/
+double	deter_m4(const double m[static 4][4]);
+/*this i just copied m3 and changed the 2 to 3 so if is broken myea*/
+double cofractor_m4(const double m[static 4][4],int row,int col);
+/*still could be broken, bu i get good result*/
+double	minor_m4(const double m[static 4][4], int row, int col);
+/*checks if a m4 matrice is invertible*/
+bool is_invertible_m4(const double m[static 4][4]);
+/*inverts the marice m4*/
+t_mat4	inverse_m4(const double m[static 4][4]);
 #endif

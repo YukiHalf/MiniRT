@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 15:07:31 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 11:22:58 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	DEBUG_print_matrice(size_t size, double m[static size][size])
 	{
 		for (int k = 0; k < size; k++)
 		{
-			printf("%6.0f ", m[i][k]);
+			printf("%f ", m[i][k]);
 		}
 		printf("\n");
 	}
@@ -54,11 +54,12 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	// printf("%s ",is_matrix_equal(4,a.m,b.m) ? "true" : "false");
-	m = init_m4((double[4][4]){{1, 0,0,0}, {4, 3, 5,0}, {7, 2, -1,-7},{6, 6, -1,5}});
-	DEBUG_print_matrice(4,m.m);
+	m = init_m4((double[4][4]){{8, -5,9,2}, {7, 5, 6,1}, {-6, 0, 9,6},{-3, 0, -9,-4}});
+t_mat4	m1 = init_m4((double[4][4]){{8, -5,9,2}, {7, 5, 6,1}, {-6, 0, 9,6},{-3, 0, -9,-4}});
+	t_mat4 C = multy_m4(m.m,m1.m);
+	DEBUG_print_matrice(4,C.m);
 	printf("\n");
-	t_mat3 m3= submatrix_m4_t_m3(m.m,0,0);
-	DEBUG_print_matrice(3,m3.m);
-	printf("\n%6.0f",cofractor_m3(m3.m,1,0));
+	C = multy_m4(C.m,inverse_m4(m1.m).m);
+	DEBUG_print_matrice(4,C.m);
 	return (0);
 }
