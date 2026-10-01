@@ -6,49 +6,66 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 11:48:02 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 10:19:36 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 14:00:18 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "color.h"
+#include "libft.h"
 #include "mlx_f.h"
 #include "scene.h"
-#include "libft.h"
-#include "color.h"
 
-int 	inti_mlx(mlx_t *mlx, mlx_image_t* image)
+int	init_mlx(t_scene *scene)
 {
-	mlx = mlx_init(WIDTH, HEIGHT,"miniRT",false);
-	if(!mlx)
+	if(!scene)
+		display_error("Malloc failed for scene",1);
+	scene->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", false);
+	if (!scene->mlx)
 	{
-		ft_putendl_fd(mlx_strerror(mlx_errno),STDERR_FILENO);
+		ft_putendl_fd(mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (-1);
 	}
-	image = mlx_new_image(mlx,128,128); // hard coded for the moment
-	if(!image)
+	scene->image = mlx_new_image(scene->mlx, 128, 128); // hard coded for the moment
+	if (!scene->image)
 	{
-		mlx_close_window(mlx);
-		ft_putendl_fd(mlx_strerror(mlx_errno),STDERR_FILENO);
+		mlx_close_window(scene->mlx);
+		ft_putendl_fd(mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (-1);
 	}
-	if(mlx_image_to_window(mlx,image,0,0) == -1)
+	if (mlx_image_to_window(scene->mlx, scene->image, 0, 0) == -1)
 	{
-		mlx_close_window(mlx);
-		ft_putendl_fd(mlx_strerror(mlx_errno),STDERR_FILENO);
+		mlx_close_window(scene->mlx);
+		ft_putendl_fd(mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (-1);
 	}
 	return (1);
 }
 
-static int32_t convert_trgb_to_uint32(t_rgb rgb)
+static uint32_t	double_to_uint32(double value)
 {
-// TO do
+	if (value < 0.0)
+		value = 0.0;
+	else if (value > 1.0)
+		value = 1.0;
+	return ((uint32_t)(value * 255 + 0.5));
 }
 
-
-void 	write_pixel_mlx(mlx_image_t *image,t_rgb rgb,uint32_t x,uint32_t y)
+static uint32_t	convert_trgb_to_uint32(t_rgb rgb)
 {
-	uint32_t color;
+	uint32_t	r;
+	uint32_t	g;
+	uint32_t	b;
+
+	r = double_to_uint32(rgb.r);
+	g = double_to_uint32(rgb.g);
+	b = double_to_uint32(rgb.b);
+	return((r << 24) | (g << 16) | (b << 8) | 255u);
+}
+
+void	write_pixel_mlx(mlx_image_t *image, t_rgb rgb, uint32_t x, uint32_t y)
+{
+	uint32_t	color;
 
 	color = convert_trgb_to_uint32(rgb);
-	mlx_put_pixel(image,x,y,color);
+	mlx_put_pixel(image, x, y, color);
 }

@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 11:49:47 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 12:26:01 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 12:27:44 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,18 @@ t_mat4	rotation_y(double radians)
 	r.m[0][2] = sin(radians);
 	r.m[2][0] = -(sin(radians));
 	r.m[2][2] = cos(radians);
+	return (r);
+}
+
+
+t_mat4	rotation_z(double radians)
+{
+	t_mat4	r;
+
+	r = init_identy_m4();
+	r.m[0][0] = cos(radians);
+	r.m[0][1] = -(sin(radians));
+	r.m[1][0] = sin(radians);
+	r.m[1][1] = cos(radians);
 	return (r);
 }

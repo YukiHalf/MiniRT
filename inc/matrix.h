@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 12:13:28 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 12:26:22 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 13:32:05 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ typedef struct s_mat4
 {
 	double m[4][4];
 } t_mat4;
+
+/*created this basicaly for just a function because it requires six parameters*/
+typedef struct s_shear
+{
+	double xy;
+	double xz;
+	double yx;
+	double yz;
+	double zx;
+	double zy;
+}	t_shear;
+
 /*creates a 4x4 matrice from an given array. It returns it as a value*/
 t_mat4	init_m4(const double a[static 4][4]);
 /*creates a 3x3 matrice from an given array. It returns it as a value*/
@@ -81,4 +93,8 @@ t_mat4 init_scaling(double x,double y,double z);
 t_mat4	rotation_x(double radians);
 /*returns by value a rotaion matrice for y axis*/
 t_mat4	rotation_y(double radians);
+/*returns by value a rotation matrice for z axis*/
+t_mat4	rotation_z(double radians);
+/*returns by value a shearing matrice*/
+t_mat4	init_shearing(t_shear amounts);
 #endif

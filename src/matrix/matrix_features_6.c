@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_f.h                                            :+:      :+:    :+:   */
+/*   matrix_features_6.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/29 11:47:30 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 14:04:04 by sdarius-         ###   ########.fr       */
+/*   Created: 2026/10/01 13:18:49 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/01 13:31:06 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_F_H
-#define MLX_F_H
+#include "matrix.h"
 
-#include "MLX42.h"
-#include "color.h"
-#include <scene.h>
-/*Start up all the prosess needed for mlx, and has some error checks. prints errors and returns -1. Returns 1 on success*/
-int	init_mlx(t_scene *scene);
-/*write a pixel of color t_rgb instead of uint32*/
-void 	write_pixel_mlx(mlx_image_t *image,t_rgb rgb,uint32_t x,uint32_t y);
+t_mat4	init_shearing(t_shear amounts)
+{
+	t_mat4	result;
 
-#endif
+	result = init_identy_m4();
+	result.m[0][1] = amounts.xy;
+	result.m[0][2] = amounts.xz;
+	result.m[1][0] = amounts.yx;
+	result.m[1][2] = amounts.yz;
+	result.m[2][0] = amounts.zx;
+	result.m[2][1] = amounts.zy;
+	return(result);
+}
