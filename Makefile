@@ -6,7 +6,9 @@ TEST_NAME = unit_tests
 CC = cc
 UNAME_S := $(shell uname -s)
 MLX42_DIR = MLX42
+
 CFLAGS := -Wall -Wextra -g -IIncludes -O3 -Ofast -ffast-math -flto -march=native -Ilibft -I$(MLX42_DIR)/include/MLX42 -MMD -MP
+
 INCLUDES = -Iinc
 RM = rm -Rf
 MLX42_LIB = $(MLX42_DIR)/build/libmlx42.a
@@ -22,6 +24,7 @@ SRCS = src/tuple/tuple_features.c \
 	src/tuple/tuple_features_3.c \
 	src/color/color_feature.c \
 	src/scene/scene_features.c \
+	src/scene/ray_features.c \
 	src/matrix/matrix_features.c \
 	src/matrix/matrix_features_2.c \
 	src/matrix/matrix_features_3.c \
@@ -29,7 +32,17 @@ SRCS = src/tuple/tuple_features.c \
 	src/matrix/matrix_features_5.c \
 	src/matrix/matrix_features_6.c \
 	src/mlx/mlx_features.c \
-	src/math/double_features.c
+	src/math/double_features.c \
+	src/app.c \
+	src/error.c \
+	src/hooks.c \
+	src/pixel.c \
+	src/render.c \
+	src/shade.c \
+	src/scene_parser/file_reader.c \
+	src/scene_parser/parse_util.c \
+	src/scene_parser/scene_checker.c \
+	src/scene_parser/scene_parser.c
 MAIN = src/main.c
 
 TEST_SRC = test/test_main.c

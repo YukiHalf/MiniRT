@@ -1,0 +1,46 @@
+#include "parser.h"
+
+static const char	*alloc_arrays(t_rt_scene *scene)
+{
+	if (scene->object_count > 0)
+		scene->objects = ft_calloc(scene->object_count, sizeof(t_object));
+	if (scene->light_count > 0)
+		scene->lights = ft_calloc(scene->light_count, sizeof(t_light));
+	if ((scene->object_count > 0 && !scene->objects)
+		|| (scene->light_count > 0 && !scene->lights))
+		return ("memory allocation failed");
+	return (NULL);
+}
+
+void	scene_free(t_rt_scene *scene)
+{
+	if (!scene)
+		return ;
+	free(scene->objects);
+	free(scene->lights);
+	scene->objects = NULL;
+	scene->lights = NULL;
+	scene->object_count = 0;
+	scene->light_count = 0;
+	scene->has_ambient = false;
+	scene->has_camera = false;
+}
+
+const char	*scene_load(t_rt_scene *scene, const char *path)
+{
+	char		*buf;
+	const char	*error;
+
+	if (!scene)
+		return ("invalid scene");
+	buf = read_file(path);
+	if (!buf)
+		return ("cannot read the scene file");
+	error = count_elements(scene, buf);
+	if (!error)
+		error = alloc_arrays(scene);
+	free(buf);
+	if (error)
+		scene_free(scene);
+	return (error);
+}

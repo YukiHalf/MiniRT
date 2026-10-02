@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 12:13:56 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/30 11:44:18 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/02 11:06:18 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ t_mat2	init_m2(const double a[static 2][2])
 bool	is_matrix_equal(size_t size, const double a[size][size],
 		const double b[size][size])
 {
-	int	i;
-	int	k;
+	size_t	i;
+	size_t	k;
 
 	i = 0;
 	while (i < size)

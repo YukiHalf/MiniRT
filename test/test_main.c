@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 16:14:46 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/02 11:07:56 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	draw_point(t_scene *scene, t_tuple point, t_rgb c)
 	double	x;
 	double	y;
 
-	x = round(scene->image->height / 2 + point.x * 10);
-	y = round(scene->image->width / 2 - point.z * 10);
+	x = round(scene->image->height / 2 + point.x * 100);
+	y = round(scene->image->width / 2 - point.z * 100);
 	if (x < 0 || x >= scene->image->width)
 		return ;
 	if (y < 0 || y >= scene->image->height)
@@ -51,20 +51,38 @@ void	draw_point(t_scene *scene, t_tuple point, t_rgb c)
 	write_pixel_mlx(scene->image, c, (uint32_t)x, (uint32_t)y);
 }
 
+
+void	fill_circle(t_scene *scene, t_tuple point, t_rgb c)
+{
+	double	x;
+	double	y;
+
+	x = round(scene->image->height / 2 + point.x * 100);
+	y = round(scene->image->width / 2 - point.z * 100);
+	if (x < 0 || x >= scene->image->width)
+		return ;
+	if (y < 0 || y >= scene->image->height)
+		return ;
+	for(int i = 0; i < y; i++)
+	write_pixel_mlx(scene->image, c, (uint32_t)x, (uint32_t)y);
+}
+
+
 void	make_circle(t_scene *scene, t_rgb color)
 {
 	t_mat4	r;
 	t_tuple	p;
 	int		i;
 
-	r = rotation_y((3 * M_PI / 6)/ 2);
+	r = rotation_y(1);
 	p = init_point(0, 0, 1);
 	i = 0;
-	while (i < 12)
+	while (i < 36000 )
 	{
 		DEBUG_print_tuple(p);
 		printf("\n");
 		draw_point(scene, p, color);
+		fill_circle(scene,p,color);
 		p = multy_m4_tup(r.m, p);
 		i++;
 	}
@@ -72,17 +90,8 @@ void	make_circle(t_scene *scene, t_rgb color)
 
 int	main(int argc, char **argv)
 {
-	t_scene	*scene;
-	t_rgb	c;
+	t_ray r = init_ray(init_point(2,3,4),init_vector(1,0,0));
 
-	c.r = 1;
-	c.g = 1;
-	c.b = 1;
-	scene = malloc(sizeof(*scene));
-	init_mlx(scene);
-	make_circle(scene, c);
-	mlx_loop(scene->mlx);
-	mlx_terminate(scene->mlx);
-	free(scene);
+	DEBUG_print_tuple(ray_position(r,-1));
 	return (0);
 }

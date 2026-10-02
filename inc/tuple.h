@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:49 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 13:58:01 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/02 11:02:09 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ t_tuple		norm_tup(t_tuple arr);
 double		dot_tup(t_tuple arr1, t_tuple arr2);
 /*returns another vector instead of a scalar.*/
 t_tuple		cross_arr(t_tuple arr1, t_tuple arr2);
-
+/*multiplies a tuple by a value and it returns a tuple by value*/
+t_tuple	multy_tup_return(t_tuple arr, double x);
 #endif

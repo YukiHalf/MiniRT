@@ -6,12 +6,13 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:15 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 14:01:00 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/02 11:01:37 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tuple.h"
 #include <math.h>
+
 void	nega_tup(t_tuple *arr)
 {
 	arr->x *= -1;
@@ -51,4 +52,13 @@ t_tuple	add_tup(t_tuple arr, t_tuple arr2)
 	else
 		new_arr.w = 0;
 	return (new_arr);
+}
+
+t_tuple	multy_tup_return(t_tuple arr, double x)
+{
+	arr.x *= x;
+	arr.y *= x;
+	arr.z *= x;
+	arr.w *= x;
+	return (arr);
 }

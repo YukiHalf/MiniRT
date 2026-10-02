@@ -6,12 +6,12 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 09:52:37 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 11:18:08 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/01 17:03:56 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "matrix.h"
-#include <stdio.h>
+
 
 double	minor_m4(const double m[static 4][4], int row, int col)
 {
