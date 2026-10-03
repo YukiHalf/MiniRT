@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_features.c                                     :+:      :+:    :+:   */
+/*   intersection_features.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/01 16:16:54 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/02 11:43:16 by sdarius-         ###   ########.fr       */
+/*   Created: 2026/10/02 11:54:20 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/02 14:45:17 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 
-t_ray	init_ray(t_tuple origin, t_tuple direction)
+t_intersections init_intersections(void)
 {
-	t_ray	r;
-
-	r.origin = init_point(origin.x, origin.y, origin.z);
-	r.direction = init_vector(direction.x, direction.y, direction.z);
-	return (r);
+	return((t_intersections){0});
 }
-
-t_tuple ray_position(t_ray ray, double t)
+bool add_intersection(t_intersections *xs,t_intersection value)
 {
-	return(add_tup(ray.origin,multy_tup_return(ray.direction,t)));
-}
+	t_intersection *new_items;
+	size_t new_capacity;
 
-double[] 	intersect_ray(t_ray ray,t_object obj)
-{
-
+	if(xs->count == xs->capacity)
+	{
+		if(xs->capacity == 0)
+			xs->capacity = 8;
+		else
+			new_capacity = xs->capacity * 2;
+	}
 }

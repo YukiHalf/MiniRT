@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/02 11:07:56 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/02 11:17:37 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	make_circle(t_scene *scene, t_rgb color)
 int	main(int argc, char **argv)
 {
 	t_ray r = init_ray(init_point(2,3,4),init_vector(1,0,0));
-
+	t_
 	DEBUG_print_tuple(ray_position(r,-1));
 	return (0);
 }

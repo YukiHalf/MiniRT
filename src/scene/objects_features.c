@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_features.c                                     :+:      :+:    :+:   */
+/*   objects_features.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/01 16:16:54 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/02 11:43:16 by sdarius-         ###   ########.fr       */
+/*   Created: 2026/10/02 11:19:13 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/02 11:40:20 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "scene.h"
 
-t_ray	init_ray(t_tuple origin, t_tuple direction)
+t_object init_sphere_default()
 {
-	t_ray	r;
-
-	r.origin = init_point(origin.x, origin.y, origin.z);
-	r.direction = init_vector(direction.x, direction.y, direction.z);
-	return (r);
-}
-
-t_tuple ray_position(t_ray ray, double t)
-{
-	return(add_tup(ray.origin,multy_tup_return(ray.direction,t)));
-}
-
-double[] 	intersect_ray(t_ray ray,t_object obj)
-{
-
+	return((t_object){OBJ_SPHERE,init_point(0,0,0),init_point(0,0,0),1,1,(t_rgb){1,1,1}});
 }
