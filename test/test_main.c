@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/05 13:40:05 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/05 14:01:51 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,11 @@ void	make_circle(t_scene *scene, t_rgb color)
 
 int	main(int argc, char **argv)
 {
-	t_ray			r;
-	t_object		s;
-	t_intersections	xs;
+	t_ray r = init_ray(init_point(1,2,3),init_vector(0,1,0));
+	t_mat4 m = init_scaling(2,3,4);
+	t_ray r2 = transform_ray(r,m);
 
-	r = init_ray(init_point(0, 0, -3), init_vector(0, 0, 1));
-	s = init_sphere_default();
-	init_intersections(&xs);
-	collect_sphere_intersections(&xs,&s,&r);
-	double hitman = hit(&xs);
-
-	printf("%d %6.0f %6.0f h:%6.0f| \n %p %p %p\n", xs.count, xs.items[0].t, xs.items[1].t, hitman,
-		(void *)xs.items[0].t_object,(void *)xs.items[1].t_object,(void *)&s);
+	DEBUG_print_tuple(r2.origin);
+	DEBUG_print_tuple(r2.direction);
 	return (0);
 }

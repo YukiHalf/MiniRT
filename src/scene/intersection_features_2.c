@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/05 13:20:47 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/05 13:42:31 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/05 13:46:16 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ double	hit(t_intersections *xs)
 	size_t	i;
 	double	lowest;
 
+	i = 0;
 	lowest = -1.0;
 	while (i < xs->count)
 	{

@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/05 13:29:10 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/05 14:00:57 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "tuple.h"
 # include <stdlib.h>
 #include <stdint.h>
-
+#include "matrix.h"
 typedef struct scene_s
 {
 	mlx_t			*mlx;
@@ -127,4 +127,6 @@ bool				collect_sphere_intersections(t_intersections *xs,
 						t_object *sphere, const t_ray *ray);
 /*finds the lowest nonnegative intersection*/
 double	hit(t_intersections *xs);
+/*transforms a ray either on translation or scailing*/
+t_ray	transform_ray(t_ray r, t_mat4 m);
 #endif
