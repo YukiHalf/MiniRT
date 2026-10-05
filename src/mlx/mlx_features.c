@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 11:48:02 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 16:34:36 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/05 11:22:41 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	init_mlx(t_scene *scene)
 {
 	if(!scene)
 		display_error("Malloc failed for scene",1);
-	scene->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", false);
+	scene->mlx = mlx_init(WIN_W, WIN_H, "miniRT", false);
 	if (!scene->mlx)
 	{
 		ft_putendl_fd(mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (-1);
 	}
-	scene->image = mlx_new_image(scene->mlx, WIDTH,HEIGHT); // hard coded for the moment
+	scene->image = mlx_new_image(scene->mlx, WIN_W,WIN_H); // hard coded for the moment
 	if (!scene->image)
 	{
 		mlx_close_window(scene->mlx);

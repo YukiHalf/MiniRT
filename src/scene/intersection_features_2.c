@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_features.c                                     :+:      :+:    :+:   */
+/*   intersection_features_2.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/01 16:16:54 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/05 11:21:01 by sdarius-         ###   ########.fr       */
+/*   Created: 2026/10/05 13:20:47 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/05 13:42:31 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 
-t_ray	init_ray(t_tuple origin, t_tuple direction)
+double	hit(t_intersections *xs)
 {
-	t_ray	r;
+	size_t	i;
+	double	lowest;
 
-	r.origin = init_point(origin.x, origin.y, origin.z);
-	r.direction = init_vector(direction.x, direction.y, direction.z);
-	return (r);
+	lowest = -1.0;
+	while (i < xs->count)
+	{
+		if (xs->items[i].t >= 0.0 && (lowest < 0.0 || xs->items[i].t < lowest))
+			lowest = xs->items[i].t;
+		i++;
+	}
+	return (lowest);
 }
-
-t_tuple ray_position(t_ray ray, double t)
-{
-	return(add_tup(ray.origin,multy_tup_return(ray.direction,t)));
-}
-
-
-
-
-

@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/02 11:17:37 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/05 13:40:05 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	draw_point(t_scene *scene, t_tuple point, t_rgb c)
 	write_pixel_mlx(scene->image, c, (uint32_t)x, (uint32_t)y);
 }
 
-
 void	fill_circle(t_scene *scene, t_tuple point, t_rgb c)
 {
 	double	x;
@@ -63,10 +62,9 @@ void	fill_circle(t_scene *scene, t_tuple point, t_rgb c)
 		return ;
 	if (y < 0 || y >= scene->image->height)
 		return ;
-	for(int i = 0; i < y; i++)
-	write_pixel_mlx(scene->image, c, (uint32_t)x, (uint32_t)y);
+	for (int i = 0; i < y; i++)
+		write_pixel_mlx(scene->image, c, (uint32_t)x, (uint32_t)y);
 }
-
 
 void	make_circle(t_scene *scene, t_rgb color)
 {
@@ -77,12 +75,12 @@ void	make_circle(t_scene *scene, t_rgb color)
 	r = rotation_y(1);
 	p = init_point(0, 0, 1);
 	i = 0;
-	while (i < 36000 )
+	while (i < 36000)
 	{
 		DEBUG_print_tuple(p);
 		printf("\n");
 		draw_point(scene, p, color);
-		fill_circle(scene,p,color);
+		fill_circle(scene, p, color);
 		p = multy_m4_tup(r.m, p);
 		i++;
 	}
@@ -90,8 +88,17 @@ void	make_circle(t_scene *scene, t_rgb color)
 
 int	main(int argc, char **argv)
 {
-	t_ray r = init_ray(init_point(2,3,4),init_vector(1,0,0));
-	t_
-	DEBUG_print_tuple(ray_position(r,-1));
+	t_ray			r;
+	t_object		s;
+	t_intersections	xs;
+
+	r = init_ray(init_point(0, 0, -3), init_vector(0, 0, 1));
+	s = init_sphere_default();
+	init_intersections(&xs);
+	collect_sphere_intersections(&xs,&s,&r);
+	double hitman = hit(&xs);
+
+	printf("%d %6.0f %6.0f h:%6.0f| \n %p %p %p\n", xs.count, xs.items[0].t, xs.items[1].t, hitman,
+		(void *)xs.items[0].t_object,(void *)xs.items[1].t_object,(void *)&s);
 	return (0);
 }
