@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 11:19:13 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/06 10:12:46 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/06 12:04:53 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,17 @@ t_object	init_sphere_default(void)
 void 	set_transform(t_object *obj,t_mat4 t)
 {
 	obj->transform = t;
+}
+
+t_tuple 	normal_at(t_object obj,t_tuple p)
+{
+	t_tuple obj_point;
+	t_tuple obj_normal;
+	t_tuple world_normal;
+
+	obj_point = multy_m4_tup(inverse_m4(obj.transform.m).m,p);
+	obj_normal = subst_tup(obj_point,init_point(0,0,0));
+	world_normal = multy_m4_tup(transpose_m4(inverse_m4(obj.transform.m).m).m,obj_normal);
+	world_normal.w = 0;
+	return(norm_tup(world_normal));
 }

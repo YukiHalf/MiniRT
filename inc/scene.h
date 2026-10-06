@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/06 10:20:16 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/06 11:39:30 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,6 @@ double				hit(t_intersections *xs);
 t_ray				transform_ray(t_ray r, t_mat4 m);
 /*sets transfrom for a object*/
 void				set_transform(t_object *obj, t_mat4 t);
+/*returns the normal for a shpere/obj*/
+t_tuple 	normal_at(t_object obj,t_tuple p);
 #endif
