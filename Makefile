@@ -31,6 +31,7 @@ SRCS = src/tuple/tuple_features.c \
 	src/scene/intersection_features.c \
 	src/scene/intersection_features_2.c \
 	src/scene/objects_features.c \
+	src/scene/objects_features_2.c \
 	src/matrix/matrix_features.c \
 	src/matrix/matrix_features_2.c \
 	src/matrix/matrix_features_3.c \

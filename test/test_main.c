@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/06 12:09:51 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/06 12:33:48 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,19 @@ int	main(int argc, char **argv)
 	set_transform(&s,m);
 	n = normal_at(s,init_point(0,sqrt(2)/2,-(sqrt(2))/2));
 	DEBUG_print_tuple(n);
-	// mlx_loop(scene.mlx);
-	// mlx_terminate(scene.mlx);
+	t_tuple v = init_vector(0,-1,0);
+	t_tuple n2 = init_vector(sqrt(2)/2,sqrt(2)/2,0);
+	t_tuple re = reflect(v,n2);
+	DEBUG_print_tuple(re);
+	t_light l = point_light(init_point(0,0,0),(t_rgb){1,1,1});
+	DEBUG_print_tuple(l.pos);
+	t_material mat = material();
+
+	s.material = mat;
+	printf("%f %f %f %f", s.material.ambient, s.material.diffuse,
+		s.material.shininess, s.material.specular);
+	//mlx_loop(scene.mlx);
+	//mlx_terminate(scene.mlx);
 
 	return (0);
 }

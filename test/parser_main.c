@@ -87,8 +87,8 @@ static void	test_valid_basic(void)
 	check_dbl("basic camera dir y", s.camera.dir.y, 0.0);
 	check_dbl("basic camera dir w", s.camera.dir.w, 0.0);
 	check_dbl("basic camera fov", s.camera.fov, 70.0);
-	check_dbl("basic light b", s.lights[0].brightness, 0.8);
-	check_dbl("basic light color g", s.lights[0].color.g, 1.0);
+	check_dbl("basic light intensity r", s.lights[0].intensity.r, 0.8);
+	check_dbl("basic light intensity g", s.lights[0].intensity.g, 0.8);
 	check_int("basic sphere type", s.objects[0].type, OBJ_SPHERE);
 	check_dbl("basic sphere radius", s.objects[0].radius, 10.0);
 	check_dbl("basic sphere pos z", s.objects[0].pos.z, 20.0);

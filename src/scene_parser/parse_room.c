@@ -40,6 +40,8 @@ const char	*parse_camera(t_context *c, char **tok, int n)
 const char	*parse_light(t_context *c, char **tok, int n)
 {
 	t_light	*l;
+	t_rgb	color;
+	double	brightness;
 
 	if (n != 4)
 		return ("light: expected 'L x,y,z brightness r,g,b'");
@@ -48,10 +50,11 @@ const char	*parse_light(t_context *c, char **tok, int n)
 	l = &c->scene->lights[c->light_i];
 	if (!parse_point(tok[1], &l->pos))
 		return ("light: position must be x,y,z");
-	if (!parse_range(tok[2], 0.0, 1.0, &l->brightness))
+	if (!parse_range(tok[2], 0.0, 1.0, &brightness))
 		return ("light: brightness must be a number in [0.0, 1.0]");
-	if (!parse_color(tok[3], &l->color))
+	if (!parse_color(tok[3], &color))
 		return ("light: color must be r,g,b integers in [0, 255]");
+	l->intensity = mult_scalar_rgb(color, brightness);
 	c->light_i++;
 	return (NULL);
 }
