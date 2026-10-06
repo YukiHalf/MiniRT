@@ -28,19 +28,31 @@ void	scene_free(t_rt_scene *scene)
 
 const char	*scene_load(t_rt_scene *scene, const char *path)
 {
-	char		*buf;
+	t_context	ctx;
 	const char	*error;
+	int		ln;
 
 	if (!scene)
 		return ("invalid scene");
-	buf = read_file(path);
-	if (!buf)
-		return ("cannot read the scene file");
-	error = count_elements(scene, buf);
+	scene->err_line = 0;
+	ln = 0;
+	error = read_scene_file(path, count_line, scene, &ln);
 	if (!error)
 		error = alloc_arrays(scene);
-	free(buf);
 	if (error)
+	{
+		scene->err_line = ln;
 		scene_free(scene);
+		return (error);
+	}
+	ctx.scene = scene;
+	ctx.obj_i = 0;
+	ctx.light_i = 0;
+	error = read_scene_file(path, parse_line, &ctx, &ln);
+	if (error)
+	{
+		scene->err_line = ln;
+		scene_free(scene);
+	}
 	return (error);
 }

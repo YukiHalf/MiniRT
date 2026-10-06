@@ -1,6 +1,6 @@
 #include "parser.h"
 
-static t_line_type	classify(const char *token, size_t len)
+t_line_type	classify(const char *token, size_t len)
 {
 	if (len == 1 && token[0] == 'A')
 		return (T_AMBIENT);
@@ -17,58 +17,30 @@ static t_line_type	classify(const char *token, size_t len)
 	return (T_UNKNOWN);
 }
 
-static const char	*scene_error(t_rt_scene *scene, int line,
-	const char *message)
+bool	is_object(t_line_type type)
 {
-	scene->err_line = line;
-	return (message);
+	return (type == T_SPHERE || type == T_PLANE || type == T_CYLINDER);
 }
 
-static t_line_type	line_type(const char *line)
+const char	*count_line(void *ctx, char *line)
 {
-	size_t	len;
-
-	while (*line && *line != '\n' && is_blank(*line))
-		line++;
-	len = 0;
-	while (line[len] && line[len] != '\n' && !is_blank(line[len]))
-		len++;
-	if (len == 0)
-		return (T_BLANK);
-	return (classify(line, len));
-}
-
-static char	*next_line(char *line)
-{
-	while (*line && *line != '\n')
-		line++;
-	if (*line == '\n')
-		line++;
-	return (line);
-}
-
-const char	*count_elements(t_rt_scene *scene, char *buf)
-{
-	int			line_number;
+	t_rt_scene	*scene;
+	char		*tok[MAX_TOKENS];
 	t_line_type	type;
+	int		n;
 
-	line_number = 1;
-	while (*buf)
-	{
-		type = line_type(buf);
-		if (type == T_UNKNOWN)
-			return (scene_error(scene, line_number,
-					"unknown element identifier"));
-		if (type == T_AMBIENT)
-			scene->has_ambient = true;
-		else if (type == T_CAMERA)
-			scene->has_camera = true;
-		else if (type == T_LIGHT)
-			scene->light_count++;
-		else if (type >= T_SPHERE)
-			scene->object_count++;
-		buf = next_line(buf);
-		line_number++;
-	}
+	scene = ctx;
+	n = tokenize(line, tok, MAX_TOKENS);
+	if (n < 0)
+		return ("too many fields on this line");
+	if (n == 0)
+		return (NULL);
+	type = classify(tok[0], ft_strlen(tok[0]));
+	if (type == T_UNKNOWN)
+		return ("unknown element identifier");
+	if (type == T_LIGHT)
+		scene->light_count++;
+	else if (is_object(type))
+		scene->object_count++;
 	return (NULL);
 }

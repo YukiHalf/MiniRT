@@ -43,9 +43,14 @@ SRCS = src/tuple/tuple_features.c \
 	src/render.c \
 	src/shade.c \
 	src/scene_parser/file_reader.c \
+	src/scene_parser/number_util.c \
+	src/scene_parser/parse_objects.c \
+	src/scene_parser/parse_room.c \
 	src/scene_parser/parse_util.c \
+	src/scene_parser/parse_vec.c \
 	src/scene_parser/scene_checker.c \
-	src/scene_parser/scene_parser.c
+	src/scene_parser/scene_parser.c \
+	src/scene_parser/scene_parser2.c
 MAIN = src/main.c
 
 TEST_SRC = test/test_main.c
