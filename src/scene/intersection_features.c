@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 11:54:20 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/05 13:16:26 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/06 10:19:55 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,16 @@ bool	init_intersections(t_intersections *xs)
 	return (true);
 }
 
-bool	sphere_intersect(t_object *s, t_ray r, double *t0, double *t1)
+bool	sphere_intersect(t_object *s, t_ray r2, double *t0, double *t1)
 {
 	t_tuple	offset;
 	double 	a;
 	double	b;
 	double	c;
 	double	discriminant;
+	t_ray r;
 
+	r  = transform_ray(r2,inverse_m4(s->transform.m));
 	offset = subst_tup(r.origin, s->pos);
 	a =	dot_tup(r.direction, r.direction);
 	b = 2.0 * dot_tup(r.direction, offset);
