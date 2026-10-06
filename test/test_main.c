@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/06 12:09:51 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/06 12:33:48 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,16 @@ int	main(int argc, char **argv)
 	set_transform(&s,init_translation(0,1,0));
 	//init_mlx(&scene);
 	//render_world(&scene,&xs,&s,&r);
-	t_tuple n = normal_at(s,init_point(0,1.70711,-0.70711));
-	DEBUG_print_tuple(n);
-	t_mat4 m = multy_m4(init_scaling(1,0.5,1).m,rotation_z(M_PI/5).m);
-	set_transform(&s,m);
-	n = normal_at(s,init_point(0,sqrt(2)/2,-(sqrt(2))/2));
-	DEBUG_print_tuple(n);
+	t_tuple v = init_vector(0,-1,0);
+	t_tuple n = init_vector(sqrt(2)/2,sqrt(2)/2,0);
+	t_tuple re = reflect(v,n);
+	DEBUG_print_tuple(re);
+	t_light l = point_light(init_point(0,0,0),(t_rgb){1,1,1});
+	DEBUG_print_tuple(l.pos);
+	t_material m = material();
+
+	s.material =m;
+printf("%f %f %f %f",s.material.ambient,s.material.diffuse,s.material.shininess,s.material.specular);
 	//mlx_loop(scene.mlx);
 	//mlx_terminate(scene.mlx);
 

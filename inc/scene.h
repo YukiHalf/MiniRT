@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/06 11:39:30 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/06 12:29:18 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ typedef enum e_obj_type
 	OBJ_CYLINDER
 }					t_obj_type;
 
+typedef struct s_material
+{
+	t_rgb			color;
+	double			ambient;
+	double			diffuse;
+	double			specular;
+	double			shininess;
+}					t_material;
+
 typedef struct s_object
 {
 	t_obj_type		type;
@@ -47,6 +56,7 @@ typedef struct s_object
 	double			height;
 	t_rgb			color;
 	t_mat4			transform;
+	t_material		material;
 }					t_object;
 
 typedef struct s_ambient
@@ -65,8 +75,7 @@ typedef struct s_camera
 typedef struct s_light
 {
 	t_tuple			pos;
-	double			brightness;
-	t_rgb			color;
+	t_rgb			intensity;
 }					t_light;
 
 typedef struct s_rt_scene
@@ -133,5 +142,11 @@ t_ray				transform_ray(t_ray r, t_mat4 m);
 /*sets transfrom for a object*/
 void				set_transform(t_object *obj, t_mat4 t);
 /*returns the normal for a shpere/obj*/
-t_tuple 	normal_at(t_object obj,t_tuple p);
+t_tuple				normal_at(t_object obj, t_tuple p);
+/*returns the reflect from an in and normal*/
+t_tuple				reflect(t_tuple in, t_tuple normal);
+/*returns a point and intensity as a t_light value*/
+t_light				point_light(t_tuple p, t_rgb i);
+/*returns default material as value*/
+t_material	material(void);
 #endif
