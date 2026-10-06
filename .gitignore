@@ -6,4 +6,5 @@ inc/MLX42
 MLX42
 libft
 unit_tests
+parser_tests
 minirt

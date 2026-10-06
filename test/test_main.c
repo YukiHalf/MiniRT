@@ -110,8 +110,8 @@ int	main(int argc, char **argv)
 	set_transform(&s,m);
 	n = normal_at(s,init_point(0,sqrt(2)/2,-(sqrt(2))/2));
 	DEBUG_print_tuple(n);
-	//mlx_loop(scene.mlx);
-	//mlx_terminate(scene.mlx);
+	// mlx_loop(scene.mlx);
+	// mlx_terminate(scene.mlx);
 
 	return (0);
 }

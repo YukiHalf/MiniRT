@@ -2,6 +2,9 @@ NAME = miniRT
 
 TEST_NAME = unit_tests
 
+PARSER_TEST_NAME = parser_tests
+PARSER_TEST_SRC = test/parser_main.c
+
 
 CC = cc
 UNAME_S := $(shell uname -s)
@@ -59,7 +62,8 @@ TEST_SRC = test/test_main.c
 OBJS = $(SRCS:.c=.o)
 MAIN_OBJS = $(MAIN:.c=.o)
 TEST_OBJS = $(TEST_SRC:.c=.o)
-DEPS = $(OBJS:.o=.d) $(MAIN_OBJS:.o=.d) $(TEST_OBJS:.o=.d)
+PARSER_TEST_OBJS = $(PARSER_TEST_SRC:.c=.o)
+DEPS = $(OBJS:.o=.d) $(MAIN_OBJS:.o=.d) $(TEST_OBJS:.o=.d) $(PARSER_TEST_OBJS:.o=.d)
 
 INC_LIB = -I$(LIBFT_DIR)/
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -90,24 +94,28 @@ test: $(OBJS) $(TEST_OBJS) $(LIBFT) $(MLX42_LIB)
 	$(CC) $(CFLAGS) $(TEST_OBJS) $(OBJS)  $(LIBS) -o $(TEST_NAME)
 	./$(TEST_NAME)
 
-$(OBJS) $(MAIN_OBJS) $(TEST_OBJS): | $(MLX42_LIB)
+ptest: $(OBJS) $(PARSER_TEST_OBJS) $(LIBFT) $(MLX42_LIB)
+	$(CC) $(CFLAGS) $(PARSER_TEST_OBJS) $(OBJS) $(LIBS) -o $(PARSER_TEST_NAME)
+	./$(PARSER_TEST_NAME)
+
+$(OBJS) $(MAIN_OBJS) $(TEST_OBJS) $(PARSER_TEST_OBJS): | $(MLX42_LIB)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) $(INC_LIB) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS) $(MAIN_OBJS) $(TEST_OBJS) $(DEPS)
+	$(RM) $(OBJS) $(MAIN_OBJS) $(TEST_OBJS) $(PARSER_TEST_OBJS) $(DEPS)
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(RM) $(NAME) $(TEST_NAME)
+	$(RM) $(NAME) $(TEST_NAME) $(PARSER_TEST_NAME)
 	$(RM) $(MLX42_DIR)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean
 	$(MAKE) all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test ptest
 
 -include $(DEPS)
 
