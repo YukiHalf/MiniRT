@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:22:56 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 12:02:11 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 13:36:21 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,10 @@ t_rgb	lighting(t_lighting_parms parm)
 		return (add_rgb(ambient, util_ligthing(parm, effective_color,
 					light_dot_normal)));
 	return (add_rgb(ambient, add_rgb(diffuse, specular)));
+}
+
+
+t_object 	test_shape(void)
+{
+	return((t_object){.transform = init_identy_m4(),.material = material()});
 }

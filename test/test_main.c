@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 12:30:25 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 13:33:21 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	render_world(t_scene *scene, t_intersections *xs, t_object *obj,
 	pixel_size = wall_size / scene->image->width;
 	half = 5.0;
 	double world_y, world_x;
-	wall_z = 10;
+	wall_z = 5;
 	ray_origin = init_point(0, 0, -5);
 	for (int y = 0; y < scene->image->height; y++)
 	{
@@ -109,7 +109,8 @@ void	render_world(t_scene *scene, t_intersections *xs, t_object *obj,
 						.eyev = nega_tup_return(ray->direction),
 						.normalv = normal_at(*hit(xs)->t_object, pos)});
 				write_pixel_mlx(scene->image, c, x, y);
-			}
+			}else
+				write_pixel_mlx(scene->image, (t_rgb){0,0,0}, x, y);
 		}
 	}
 }
@@ -126,13 +127,15 @@ int	main(int argc, char **argv)
 	t_tuple			normalv;
 	t_light			l;
 	t_rgb			res;
+	t_rt_scene 		w;
 
 	if (!init_intersections(&xs))
 		return (-1);
 	s = init_sphere_default();
-	set_transform(&s, init_translation(0, 1, 0));
+
 	 init_mlx(&scene);
 	 render_world(&scene,&xs,&s,&r);
+	
 	//pos = init_point(0, 0, 0);
 	//m = material();
 	//eyev = init_vector(0, 0, -1);
