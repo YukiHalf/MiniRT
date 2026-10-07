@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 11:32:45 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 12:25:02 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ bool				sphere_intersect(t_object *s, t_ray r2, double *t0,
 bool				collect_sphere_intersections(t_intersections *xs,
 						t_object *sphere, const t_ray *ray);
 /*finds the lowest nonnegative intersection*/
-double				hit(t_intersections *xs);
+t_intersection	*hit(t_intersections *xs);
 /*transforms a ray either on translation or scailing*/
 t_ray				transform_ray(t_ray r, t_mat4 m);
 /*sets transfrom for a object*/

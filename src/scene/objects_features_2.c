@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:22:56 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 11:50:54 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 12:02:11 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ t_material	material(void)
 }
 
 static t_rgb	util_ligthing(t_lighting_parms parm, t_rgb effective_color,
-		double light_dot_normal, t_tuple lightv)
+		double light_dot_normal)
 {
 	double	reflect_dot_eye;
 	t_tuple	reflectv;
 	t_rgb	diffuse;
 	t_rgb	specular;
+	t_tuple	lightv;
 
+	lightv = norm_tup(subst_tup(parm.l.pos, parm.pos));
 	diffuse = mult_scalar_rgb(effective_color, parm.m.diffuse
 			* light_dot_normal);
 	reflectv = reflect(nega_tup_return(lightv), parm.normalv);
@@ -41,16 +43,15 @@ static t_rgb	util_ligthing(t_lighting_parms parm, t_rgb effective_color,
 t_rgb	lighting(t_lighting_parms parm)
 {
 	t_rgb	effective_color;
-	t_tuple	lightv;
 	t_rgb	ambient;
 	double	light_dot_normal;
 	t_rgb	diffuse;
 	t_rgb	specular;
 
 	effective_color = mult_color_rgb(parm.m.color, parm.l.intensity);
-	lightv = norm_tup(subst_tup(parm.l.pos, parm.pos));
 	ambient = mult_scalar_rgb(effective_color, parm.m.ambient);
-	light_dot_normal = dot_tup(lightv, parm.normalv);
+	light_dot_normal = dot_tup(norm_tup(subst_tup(parm.l.pos, parm.pos)),
+			parm.normalv);
 	if (light_dot_normal < 0)
 	{
 		diffuse = (t_rgb){0, 0, 0};
@@ -58,6 +59,6 @@ t_rgb	lighting(t_lighting_parms parm)
 	}
 	else
 		return (add_rgb(ambient, util_ligthing(parm, effective_color,
-					light_dot_normal, lightv)));
+					light_dot_normal)));
 	return (add_rgb(ambient, add_rgb(diffuse, specular)));
 }

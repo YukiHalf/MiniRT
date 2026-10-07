@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 11:54:20 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/06 10:19:55 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 12:10:23 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,17 @@ bool	init_intersections(t_intersections *xs)
 bool	sphere_intersect(t_object *s, t_ray r2, double *t0, double *t1)
 {
 	t_tuple	offset;
-	double 	a;
+	double	a;
 	double	b;
-	double	c;
 	double	discriminant;
-	t_ray r;
+	t_ray	r;
 
-	r  = transform_ray(r2,inverse_m4(s->transform.m));
+	r = transform_ray(r2, inverse_m4(s->transform.m));
 	offset = subst_tup(r.origin, s->pos);
-	a =	dot_tup(r.direction, r.direction);
+	a = dot_tup(r.direction, r.direction);
 	b = 2.0 * dot_tup(r.direction, offset);
-	c = dot_tup(offset, offset) - s->radius * s->radius;
-	discriminant = b * b - 4.0 * dot_tup(r.direction, r.direction) * c;
+	discriminant = b * b - 4.0 * a
+    * (dot_tup(offset, offset) - s->radius * s->radius);
 	if (discriminant < 0)
 		return (false);
 	*t0 = (-b - sqrt(discriminant)) / (2.0 * a);
@@ -49,7 +48,7 @@ bool	size_up_intersections_cap(t_intersections *xs)
 	size_t			i;
 	t_intersection	*new_i;
 
-	if(xs->capacity > SIZE_MAX / sizeof(*xs->items) / 2)
+	if (xs->capacity > SIZE_MAX / sizeof(*xs->items) / 2)
 		return (false);
 	new_capacity = xs->capacity * 2;
 	new_i = malloc(sizeof(*new_i) * new_capacity);
