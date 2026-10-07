@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/06 12:29:18 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 11:32:45 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,15 @@ typedef struct s_intersections
 	size_t			capacity;
 }					t_intersections;
 
+typedef struct s_lighting_parms
+{
+	t_material		m;
+	t_light			l;
+	t_tuple			pos;
+	t_tuple			eyev;
+	t_tuple			normalv;
+}					t_lighting_parms;
+
 /* give the point position of a ray moved in t time*/
 t_tuple				ray_position(t_ray ray, double t);
 /*initiates a ray*/
@@ -148,5 +157,7 @@ t_tuple				reflect(t_tuple in, t_tuple normal);
 /*returns a point and intensity as a t_light value*/
 t_light				point_light(t_tuple p, t_rgb i);
 /*returns default material as value*/
-t_material	material(void);
+t_material			material(void);
+/*returns the color for a matching eye lvl and material*/
+t_rgb	lighting(t_lighting_parms parm);
 #endif

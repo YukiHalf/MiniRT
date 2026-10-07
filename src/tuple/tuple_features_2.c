@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:26 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 13:47:19 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 10:49:42 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,9 @@ t_tuple	*create_tup(float a, float b, float c, float d)
 	arr->z = c;
 	arr->w = d;
 	return (arr);
+}
+
+t_tuple	nega_tup_return(t_tuple arr)
+{
+	return((t_tuple){.x = -arr.x,.y = -arr.y,.z = -arr.z,.w = -arr.w});
 }
