@@ -123,6 +123,7 @@ typedef struct s_lighting_parms
 	t_tuple			pos;
 	t_tuple			eyev;
 	t_tuple			normalv;
+  bool        in_shadow;
 }					t_lighting_parms;
 
 /* give the point position of a ray moved in t time*/

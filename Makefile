@@ -10,7 +10,7 @@ CC = cc
 UNAME_S := $(shell uname -s)
 MLX42_DIR = MLX42
 
-CFLAGS := -Wall -Wextra -g -IIncludes -O3 -Ofast -ffast-math -flto -march=native -Ilibft -I$(MLX42_DIR)/include/MLX42 -MMD -MP
+CFLAGS := -Wall -Wextra -g -IIncludes -O3 -ffast-math -flto -march=native -Ilibft -I$(MLX42_DIR)/include/MLX42 -MMD -MP
 
 INCLUDES = -Iinc
 RM = rm -Rf
@@ -40,6 +40,8 @@ SRCS = src/tuple/tuple_features.c \
 	src/matrix/matrix_features_6.c \
 	src/mlx/mlx_features.c \
 	src/math/double_features.c \
+	src/camera.c \
+	src/world.c \
 	src/app.c \
 	src/error.c \
 	src/hooks.c \

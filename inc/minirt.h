@@ -6,6 +6,9 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 # include "MLX42.h"
+# include "scene.h"
+# include "camera.h"
+# include "world.h"
 
 # define TITLE "miniRT"
 # define WIN_W 1080
@@ -24,6 +27,10 @@ typedef struct s_app
 	int			resize_h;
 	bool		resize_pending;
 	const char	*error;
+	t_rt_scene	scene;
+	t_cam		camera;
+	t_mat4		view;
+	t_intersections	xs;
 }t_app;
 
 const char	*app_init(t_app *app);
@@ -39,7 +46,6 @@ uint32_t	color_from_unit(double r, double g, double b);
 void		pixel_put(t_app *app, int x, int y, uint32_t color);
 void		image_fill(t_app *app, uint32_t color);
 void		render_step(t_app *app);
-uint32_t	shade_pixel(const t_app *app, int x, int y);
 int			print_error(const char *msg);
 
 #endif

@@ -34,6 +34,9 @@ static void	apply_resize(t_app *app)
 	}
 	app->width = app->resize_w;
 	app->height = app->resize_h;
+	camera_init(&app->camera, app->width, app->height,
+		app->camera.field_of_view);
+	app->camera.transform = app->view;
 	app_invalidate(app);
 }
 

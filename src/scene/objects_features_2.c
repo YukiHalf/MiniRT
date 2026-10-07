@@ -50,6 +50,8 @@ t_rgb	lighting(t_lighting_parms parm)
 
 	effective_color = mult_color_rgb(parm.m.color, parm.l.intensity);
 	ambient = mult_scalar_rgb(effective_color, parm.m.ambient);
+  if (parm.in_shadow)
+    return (ambient);
 	light_dot_normal = dot_tup(norm_tup(subst_tup(parm.l.pos, parm.pos)),
 			parm.normalv);
 	if (light_dot_normal < 0)

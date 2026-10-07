@@ -2,12 +2,16 @@
 
 static void	render_row(t_app *app, int y)
 {
-	int	x;
+	t_ray	ray;
+	t_rgb	color;
+	int		x;
 
 	x = 0;
 	while (x < app->width)
 	{
-		pixel_put(app, x, y, shade_pixel(app, x, y));
+		ray = ray_for_pixel(&app->camera, x, y);
+		color = color_at(&app->scene, &ray, &app->xs);
+		pixel_put(app, x, y, color_from_unit(color.r, color.g, color.b));
 		x++;
 	}
 }

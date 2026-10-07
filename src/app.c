@@ -1,4 +1,5 @@
 #include "minirt.h"
+#include "parser.h"
 
 const char	*app_init(t_app *app)
 {
@@ -16,6 +17,8 @@ const char	*app_init(t_app *app)
 	mlx_key_hook(app->mlx, key_hook, app);
 	mlx_resize_hook(app->mlx, resize_hook, app);
 	mlx_loop_hook(app->mlx, loop_hook, app);
+	if (!init_intersections(&app->xs))
+		return ("memory allocation failed");
 	app_invalidate(app);
 	return (NULL);
 }
@@ -27,10 +30,13 @@ void	app_run(t_app *app)
 
 void	app_cleanup(t_app *app)
 {
+	free(app->xs.items);
+	app->xs.items = NULL;
 	if (app->mlx)
 		mlx_terminate(app->mlx);
 	app->mlx = NULL;
 	app->img = NULL;
+	scene_free(&app->scene);
 }
 
 void	app_invalidate(t_app *app)
