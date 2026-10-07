@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 12:25:02 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 13:08:49 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_lighting_parms
 	t_tuple			pos;
 	t_tuple			eyev;
 	t_tuple			normalv;
-  bool        in_shadow;
+	bool 			in_shadow;
 }					t_lighting_parms;
 
 /* give the point position of a ray moved in t time*/

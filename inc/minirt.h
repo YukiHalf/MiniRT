@@ -11,7 +11,7 @@
 # include "world.h"
 
 # define TITLE "miniRT"
-# define WIN_W 1080
+# define WIN_W 1920
 # define WIN_H 1080
 # define MIN_DIM 100
 # define MAX_DIM 32767

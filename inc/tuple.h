@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:49 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 10:51:06 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 13:19:12 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ t_tuple		cross_arr(t_tuple arr1, t_tuple arr2);
 t_tuple	multy_tup_return(t_tuple arr, double x);
 /*negates the tup but return*/
 t_tuple	nega_tup_return(t_tuple arr);
+/*returns a true or false if a point is in shadow*/
 #endif
