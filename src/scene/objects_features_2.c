@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:22:56 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 13:42:34 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 11:13:32 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_rgb	lighting(t_lighting_parms parm)
 	t_rgb	diffuse;
 	t_rgb	specular;
 
+	if(parm.m )
 	effective_color = mult_color_rgb(parm.m.color, parm.l.intensity);
 	ambient = mult_scalar_rgb(effective_color, parm.m.ambient);
   if (parm.in_shadow)

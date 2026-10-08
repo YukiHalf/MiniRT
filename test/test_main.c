@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 13:45:03 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 10:43:16 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ void	render_world(t_scene *scene, t_intersections *xs, t_object *obj,
 			*ray = init_ray(ray_origin, norm_tup(subst_tup(position,
 							ray_origin)));
 			xs->count = 0;
-			collect_sphere_intersections(xs, obj, ray);
+			if (!intersect(xs, obj, ray))
+				return ;
 			if (hit(xs) != NULL)
 			{
 				pos = ray_position(*ray, hit(xs)->t);
@@ -131,14 +132,29 @@ int	main(int argc, char **argv)
 
 	if (!init_intersections(&xs))
 		return (-1);
-	s = init_sphere_default();
+
 
 	// init_mlx(&scene);
 	// render_world(&scene,&xs,&s,&r);
 
 	t_object p = init_plane();
-	t_tuple n = normal_at(s,init_point(0,0,0));
-	DEBUG_print_tuple(n);
+	r = init_ray(init_point(0,10,0),init_vector(0,0,1));
+	if (!local_intersect(&xs, &p, &r))
+	{
+		free(xs.items);
+		return (-1);
+	}
+	printf("%zu\n", xs.count);
+	xs.count = 0;
+	r = init_ray(init_point(0,0,0),init_vector(0,0,1));
+	if (!local_intersect(&xs, &p, &r))
+	{
+		free(xs.items);
+		return (-1);
+	}
+	printf("%zu\n", xs.count);
+	free(xs.items);
+
 	//pos = init_point(0, 0, 0);
 	//m = material();
 	//eyev = init_vector(0, 0, -1);

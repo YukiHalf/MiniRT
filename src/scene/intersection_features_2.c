@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/05 13:20:47 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 12:24:45 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 10:46:23 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,21 @@ t_intersection	*hit(t_intersections *xs)
 		i++;
 	}
 	return (lowest);
+}
+
+bool	local_intersect(t_intersections *xs, t_object *shape,
+		const t_ray *local_ray)
+{
+	double	t;
+
+	if (shape->type == OBJ_SPHERE)
+		return (collect_sphere_intersections(xs, shape, local_ray));
+	if (shape->type == OBJ_PLANE)
+	{
+		if (fabs(local_ray->direction.y) < EPSILON)
+			return (true);
+		t = -local_ray->origin.y / local_ray->direction.y;
+		return (append_intersection(xs, t, shape));
+	}
+	return (false);
 }

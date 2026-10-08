@@ -7,11 +7,8 @@ bool	intersect_world(const t_rt_scene *world, const t_ray *ray, t_intersections 
 	i = 0;
 	while (i < world->object_count)
 	{
-		if (world->objects[i].type == OBJ_SPHERE)
-		{
-			if (!collect_sphere_intersections(xs, &world->objects[i], ray))
-				return (false);
-		}
+		if (!intersect(xs, &world->objects[i], ray))
+			return (false);
 		i++;
 	}
 	return (true);

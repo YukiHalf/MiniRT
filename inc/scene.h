@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 13:42:51 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 10:30:52 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,10 @@ bool				append_intersection(t_intersections *xs, double t,
 						t_object *obj);
 /*doubles the current capacity of current ray intersection list*/
 bool				size_up_intersections_cap(t_intersections *xs);
-/*calculates the intersections with a sphere*/
-bool				sphere_intersect(t_object *s, t_ray r2, double *t0,
+/*calculates sphere intersections from a local-space ray, without transforming it*/
+bool				sphere_intersect(t_object *s, t_ray r, double *t0,
 						double *t1);
-/*colects the calculated intersections and checks and appneds them to the intersections list*/
+/*appends sphere hits from a local-space ray; true also means no hits*/
 bool				collect_sphere_intersections(t_intersections *xs,
 						t_object *sphere, const t_ray *ray);
 /*finds the lowest nonnegative intersection*/
@@ -163,4 +163,14 @@ t_material			material(void);
 t_rgb	lighting(t_lighting_parms parm);
 /*create a plane object*/
 t_object init_plane();
+/*transforms a world-space ray once, then appends its intersections to xs*/
+bool				intersect(t_intersections *xs, t_object *shape,
+						const t_ray *ray);
+/*appends local-space hits for spheres/planes; true includes misses.
+** false means allocation failure or unsupported type. Initialize xs first;
+** neither function clears xs. Stored object pointers must remain valid.*/
+bool				local_intersect(t_intersections *xs, t_object *shape,
+						const t_ray *local_ray);
+/*gets the local for shape types*/
+t_tuple local_normal_at(t_object shape,t_tuple local_point);
 #endif

@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 11:19:13 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 11:42:31 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 10:35:40 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_tuple	normal_at(t_object obj, t_tuple p)
 	t_tuple	world_normal;
 
 	obj_point = multy_m4_tup(inverse_m4(obj.transform.m).m, p);
-	obj_normal = subst_tup(obj_point, init_point(0, 0, 0));
+	obj_normal = local_normal_at(obj,obj_point);
 	world_normal = multy_m4_tup(transpose_m4(inverse_m4(obj.transform.m).m).m,
 			obj_normal);
 	world_normal.w = 0;
