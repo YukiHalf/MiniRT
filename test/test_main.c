@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 13:33:21 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 13:45:03 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,12 @@ int	main(int argc, char **argv)
 		return (-1);
 	s = init_sphere_default();
 
-	 init_mlx(&scene);
-	 render_world(&scene,&xs,&s,&r);
-	
+	// init_mlx(&scene);
+	// render_world(&scene,&xs,&s,&r);
+
+	t_object p = init_plane();
+	t_tuple n = normal_at(s,init_point(0,0,0));
+	DEBUG_print_tuple(n);
 	//pos = init_point(0, 0, 0);
 	//m = material();
 	//eyev = init_vector(0, 0, -1);
@@ -144,7 +147,7 @@ int	main(int argc, char **argv)
 	//res = lighting((t_lighting_parms){.m = m, .l = l, .pos = pos, .eyev = eyev,
 	//		.normalv = normalv});
 	//printf("%f %f %f ", res.r, res.b, res.g);
-	 mlx_loop(scene.mlx);
-	 mlx_terminate(scene.mlx);
+	// mlx_loop(scene.mlx);
+	// mlx_terminate(scene.mlx);
 	return (0);
 }

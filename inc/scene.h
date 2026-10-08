@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 13:08:49 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 13:42:51 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,4 +161,6 @@ t_light				point_light(t_tuple p, t_rgb i);
 t_material			material(void);
 /*returns the color for a matching eye lvl and material*/
 t_rgb	lighting(t_lighting_parms parm);
+/*create a plane object*/
+t_object init_plane();
 #endif

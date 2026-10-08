@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:22:56 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 13:36:21 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/07 13:42:34 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ t_rgb	lighting(t_lighting_parms parm)
 	return (add_rgb(ambient, add_rgb(diffuse, specular)));
 }
 
-
-t_object 	test_shape(void)
+t_object init_plane()
 {
-	return((t_object){.transform = init_identy_m4(),.material = material()});
+	return((t_object){.type = OBJ_PLANE, .material = material(),.pos = init_point(0,0,0),.transform = init_identy_m4()});
 }
