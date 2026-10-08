@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 12:27:31 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 10:07:11 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:13:13 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ double	cofractor_m3(const double m[static 3][3], int row, int col)
 		i = -1;
 	return (minor_m3(m, row, col) * i);
 }
+
 double	deter_m3(const double m[static 3][3])
 {
 	double	deter;

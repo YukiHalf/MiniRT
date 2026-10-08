@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 13:18:12 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/08 13:18:13 by sdarius-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "camera.h"
 #include <math.h>
 
-static void setup_orientation(double o[4][4], t_tuple f, t_tuple l)
+static void	setup_orientation(double o[4][4], t_tuple f, t_tuple l)
 {
-  t_tuple tu;
+	t_tuple	tu;
 
-  tu = cross_arr(l, f);
-  o[0][0] = l.x;
+	tu = cross_arr(l, f);
+	o[0][0] = l.x;
 	o[0][1] = l.y;
 	o[0][2] = l.z;
 	o[0][3] = 0;
@@ -31,11 +43,11 @@ t_mat4	view_transform(t_tuple from, t_tuple to, t_tuple up)
 	double	orientation[4][4];
 	t_mat4	orient;
 	t_mat4	move;
-	
+
 	forward = norm_tup(subst_tup(to, from));
 	up = norm_tup(up);
 	left = cross_arr(forward, up);
-  setup_orientation(orientation, forward, left);
+	setup_orientation(orientation, forward, left);
 	orient = init_m4(orientation);
 	move = init_translation(-from.x, -from.y, -from.z);
 	return (multy_m4(inverse_m4(orient.m).m, move.m));

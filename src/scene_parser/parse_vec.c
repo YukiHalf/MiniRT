@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_vec.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 13:15:49 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/08 13:15:51 by sdarius-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include <math.h>
 
@@ -29,8 +41,7 @@ int	parse_point(char *s, t_tuple *out)
 	if (!split_commas(s, f))
 		return (0);
 	out->w = 1;
-	return (parse_double(f[0], &out->x)
-		&& parse_double(f[1], &out->y)
+	return (parse_double(f[0], &out->x) && parse_double(f[1], &out->y)
 		&& parse_double(f[2], &out->z));
 }
 

@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 11:54:20 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 12:10:23 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:14:16 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ bool	sphere_intersect(t_object *s, t_ray r, double *t0, double *t1)
 	offset = subst_tup(r.origin, s->pos);
 	a = dot_tup(r.direction, r.direction);
 	b = 2.0 * dot_tup(r.direction, offset);
-	discriminant = b * b - 4.0 * a
-    * (dot_tup(offset, offset) - s->radius * s->radius);
+	discriminant = b * b - 4.0 * a * (dot_tup(offset, offset) - s->radius
+			* s->radius);
 	if (discriminant < 0)
 		return (false);
 	*t0 = (-b - sqrt(discriminant)) / (2.0 * a);
 	*t1 = (-b + sqrt(discriminant)) / (2.0 * a);
 	return (true);
 }
+
 bool	size_up_intersections_cap(t_intersections *xs)
 {
 	size_t			new_capacity;

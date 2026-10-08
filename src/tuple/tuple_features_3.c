@@ -6,12 +6,13 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:20 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/09/28 14:01:13 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:17:23 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tuple.h"
 #include <math.h>
+
 t_tuple	cross_arr(t_tuple arr1, t_tuple arr2)
 {
 	t_tuple	new_tup;

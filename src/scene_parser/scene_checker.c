@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scene_checker.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 13:17:07 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/08 13:17:09 by sdarius-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 t_line_type	classify(const char *token, size_t len)
@@ -27,7 +39,7 @@ const char	*count_line(void *ctx, char *line)
 	t_rt_scene	*scene;
 	char		*tok[MAX_TOKENS];
 	t_line_type	type;
-	int		n;
+	int			n;
 
 	scene = ctx;
 	n = tokenize(line, tok, MAX_TOKENS);

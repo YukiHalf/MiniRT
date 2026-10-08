@@ -1,5 +1,17 @@
-#include "minirt.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 13:19:07 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/08 13:19:09 by sdarius-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "camera.h"
+#include "minirt.h"
 #include "parser.h"
 #include "world.h"
 #include <math.h>
@@ -23,7 +35,6 @@ static void	print_scene_error(const t_rt_scene *scene, const char *error)
 	}
 }
 
-
 /*the parser stores center, radius and color in the object fields; chapter 7
 works with unit spheres that carry a transform and a material instead, so
 move the parsed values over*/
@@ -44,7 +55,7 @@ static void	prepare_parsed_scene(t_rt_scene *scene)
 		{
 			o->material.ambient = scene->ambient.ratio;
 			o->material.color = mult_color_rgb(o->material.color,
-				scene->ambient.color);
+					scene->ambient.color);
 		}
 		if (o->type == OBJ_SPHERE)
 		{
@@ -65,8 +76,7 @@ static void	world_setup(t_app *app)
 	t_tuple		to;
 
 	scene = &app->scene;
-	camera_init(&app->camera, WIN_W, WIN_H,
-		scene->camera.fov * M_PI / 180.0);
+	camera_init(&app->camera, WIN_W, WIN_H, scene->camera.fov * M_PI / 180.0);
 	up = init_vector(0, 1, 0);
 	if (magn_tup(cross_arr(scene->camera.dir, up)) < EPSILON)
 		up = init_vector(0, 0, 1);

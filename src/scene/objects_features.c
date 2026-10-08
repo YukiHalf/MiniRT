@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 11:19:13 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 10:35:40 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:14:00 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_object	init_sphere_default(void)
 {
 	return ((t_object){.type = OBJ_SPHERE, .pos = init_point(0, 0, 0),
-		.radius = 1.0, .color = {1.0, 1.0, 1.0},
-		.transform = init_identy_m4(),.material = material()});
+		.radius = 1.0, .color = {1.0, 1.0, 1.0}, .transform = init_identy_m4(),
+		.material = material()});
 }
 
 void	set_transform(t_object *obj, t_mat4 t)
@@ -31,7 +31,7 @@ t_tuple	normal_at(t_object obj, t_tuple p)
 	t_tuple	world_normal;
 
 	obj_point = multy_m4_tup(inverse_m4(obj.transform.m).m, p);
-	obj_normal = local_normal_at(obj,obj_point);
+	obj_normal = local_normal_at(obj, obj_point);
 	world_normal = multy_m4_tup(transpose_m4(inverse_m4(obj.transform.m).m).m,
 			obj_normal);
 	world_normal.w = 0;
@@ -43,7 +43,7 @@ t_tuple	reflect(t_tuple in, t_tuple normal)
 	return (subst_tup(in, multy_tup_return(normal, 2 * dot_tup(in, normal))));
 }
 
-t_light 	point_light(t_tuple p,t_rgb i)
+t_light	point_light(t_tuple p, t_rgb i)
 {
-	return((t_light){.pos = p, .intensity = i});
+	return ((t_light){.pos = p, .intensity = i});
 }

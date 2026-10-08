@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 13:18:49 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/01 13:31:06 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:13:33 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ t_mat4	init_shearing(t_shear amounts)
 	result.m[1][2] = amounts.yz;
 	result.m[2][0] = amounts.zx;
 	result.m[2][1] = amounts.zy;
-	return(result);
+	return (result);
 }

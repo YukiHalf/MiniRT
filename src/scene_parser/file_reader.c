@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_reader.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 13:15:22 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/08 13:15:24 by sdarius-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
-# include <fcntl.h>
-# include <unistd.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 static void	drain(int fd)
 {

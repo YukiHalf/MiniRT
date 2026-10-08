@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scene_parser2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 13:17:14 by sdarius-          #+#    #+#             */
+/*   Updated: 2026/10/08 13:17:16 by sdarius-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 static bool	has_room(t_context *c, t_line_type kind)
@@ -29,8 +41,8 @@ static const char	*dispatch(t_context *c, t_line_type kind, char **tok, int n)
 const char	*parse_line(void *ctx, char *line)
 {
 	t_context	*c;
-	char	*tok[MAX_TOKENS];
-	int		n;
+	char		*tok[MAX_TOKENS];
+	int			n;
 	t_line_type	kind;
 
 	c = ctx;
