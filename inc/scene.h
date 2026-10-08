@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 11:48:08 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 12:23:14 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct s_intersections
 typedef struct s_lighting_parms
 {
 	t_material		m;
+	const t_object	*obj;
 	t_light			l;
 	t_tuple			pos;
 	t_tuple			eyev;

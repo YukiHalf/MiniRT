@@ -33,6 +33,7 @@ t_rgb	shade_hit(const t_rt_scene *world, t_comps comps, t_intersections *xs)
 	t_lighting_parms	parms;
 
 	parms.m = comps.object->material;
+	parms.obj = comps.object;
 	parms.l = world->lights[0];
 	parms.pos = comps.point;
 	parms.eyev = comps.eyev;

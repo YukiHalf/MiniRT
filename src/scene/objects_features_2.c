@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:22:56 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 11:50:23 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 12:24:31 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ t_rgb	lighting(t_lighting_parms parm)
 	t_rgb	specular;
 
 	if (parm.m.pattern.has_pattern)
-		effective_color = mult_color_rgb(stripe_at(parm.m.pattern, parm.pos),
-				parm.l.intensity);
+		effective_color = mult_color_rgb(stripe_at_object(parm.m.pattern,
+					parm.obj, parm.pos), parm.l.intensity);
 	else
 		effective_color = mult_color_rgb(parm.m.color, parm.l.intensity);
 	ambient = mult_scalar_rgb(effective_color, parm.m.ambient);
