@@ -41,8 +41,9 @@ t_comps	prepare_computations(const t_intersection *intersection, t_ray ray)
 	comps.inside = false;
 	if (dot_tup(comps.normalv, comps.eyev) < 0)
 	{
-		comps.inside = true;
+    comps.inside = true;
 		comps.normalv = nega_tup_return(comps.normalv);
 	}
+  comps.over_point = add_tup(comps.point, multy_tup_return(comps.normalv, EPSILON));
 	return (comps);
 }

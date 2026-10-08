@@ -43,5 +43,11 @@ bool	local_intersect(t_intersections *xs, t_object *shape,
 		t = -local_ray->origin.y / local_ray->direction.y;
 		return (append_intersection(xs, t, shape));
 	}
-	return (false);
+  if (shape->type == OBJ_CUBE)
+    return (cube_intersect(shape, local_ray, xs));
+  if (shape->type == OBJ_CYLINDER)
+    return (cylinder_intersect(shape, local_ray, xs));
+  if (shape->type == OBJ_CONE)
+    return (cone_intersect(shape, local_ray, xs));
+	return (true);
 }

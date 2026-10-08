@@ -39,7 +39,9 @@ typedef enum e_obj_type
 {
 	OBJ_PLANE,
 	OBJ_SPHERE,
-	OBJ_CYLINDER
+	OBJ_CYLINDER,
+  OBJ_CUBE,
+  OBJ_CONE,
 }					t_obj_type;
 
 typedef struct s_material
@@ -105,7 +107,9 @@ typedef enum e_line_type
 	T_LIGHT,
 	T_SPHERE,
 	T_PLANE,
-	T_CYLINDER
+	T_CYLINDER,
+  T_CUBE,
+  T_CONE
 }					t_line_type;
 
 typedef struct s_intersection
@@ -179,4 +183,10 @@ bool				local_intersect(t_intersections *xs, t_object *shape,
 						const t_ray *local_ray);
 /*gets the local for shape types*/
 t_tuple local_normal_at(t_object shape,t_tuple local_point);
+/*calculates cube intersections from a local-space ray, without transforming it*/
+bool         cube_intersect(t_object *c, const t_ray *r, t_intersections *xs);
+/*calculates cylinder intersections from a local-space ray, without transforming it*/
+bool    	cylinder_intersect(t_object *cy, const t_ray *r, t_intersections *xs);
+/*calculates cone intersections from a local-space ray, without transforming it*/
+bool       cone_intersect(t_object *cn, const t_ray *r, t_intersections *xs);
 #endif

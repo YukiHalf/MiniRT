@@ -33,6 +33,8 @@ int	parse_byte(const char *s, int *out);
 const char	*parse_sphere(t_context *c, char **tok, int n);
 const char	*parse_plane(t_context *c, char **tok, int n);
 const char	*parse_cylinder(t_context *c, char **tok, int n);
+const char  *parse_cube(t_context *c, char **tok, int n);
+const char  *parse_cone(t_context *c, char **tok, int n);
 
 // parse_room.c
 const char	*parse_ambient(t_context *c, char **tok, int n);

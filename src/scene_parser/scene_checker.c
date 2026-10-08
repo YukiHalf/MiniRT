@@ -26,12 +26,16 @@ t_line_type	classify(const char *token, size_t len)
 		return (T_PLANE);
 	if (len == 2 && token[0] == 'c' && token[1] == 'y')
 		return (T_CYLINDER);
+  if (len == 2 && token[0] == 'c' && token[1] == 'b')
+    return (T_CUBE);
+  if (len == 2 && token[0] == 'c' && token[1] == 'n')
+    return (T_CONE);
 	return (T_UNKNOWN);
 }
 
 bool	is_object(t_line_type type)
 {
-	return (type == T_SPHERE || type == T_PLANE || type == T_CYLINDER);
+	return (type == T_SPHERE || type == T_PLANE || type == T_CYLINDER || type == T_CUBE || type == T_CONE);
 }
 
 const char	*count_line(void *ctx, char *line)

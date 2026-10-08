@@ -35,6 +35,10 @@ static const char	*dispatch(t_context *c, t_line_type kind, char **tok, int n)
 		return (parse_plane(c, tok, n));
 	if (kind == T_CYLINDER)
 		return (parse_cylinder(c, tok, n));
+  if (kind == T_CUBE)
+    return (parse_cube(c, tok, n));
+  if (kind == T_CONE)
+    return (parse_cone(c, tok, n));
 	return ("unknown element identifier");
 }
 
