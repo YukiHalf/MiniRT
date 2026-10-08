@@ -12,7 +12,7 @@
 
 #include "color.h"
 
-t_rgb	init_rgb(double r, double b, double g)
+t_rgb	init_rgb(double r, double g, double b)
 {
 	return ((t_rgb){r, g, b});
 }

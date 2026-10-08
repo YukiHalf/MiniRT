@@ -21,7 +21,7 @@ typedef struct rgb_s
 }			t_rgb;
 
 /*initializez a t_rgb  and returns it by value*/
-t_rgb	init_rgb(double r, double b, double g);
+t_rgb	init_rgb(double r, double g, double b);
 /*adds two t_rgb structs and returns a new t_rgb value*/
 t_rgb	add_rgb(t_rgb c1, t_rgb c2);
 /*subtracts two t_rgb structs and returns a new t_rgb value */
