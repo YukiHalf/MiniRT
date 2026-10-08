@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:19:07 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 13:19:09 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:24:50 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ int	main(int argc, char **argv)
 	{
 		error = scene_load(&app.scene, argv[1]);
 		if (error)
-		{
-			print_scene_error(&app.scene, error);
-			return (1);
-		}
+			return (print_scene_error(&app.scene, error), 1);
 		prepare_parsed_scene(&app.scene);
 	}
 	world_setup(&app);

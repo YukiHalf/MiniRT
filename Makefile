@@ -26,7 +26,6 @@ SRCS = src/tuple/tuple_features.c \
 	src/tuple/tuple_features_2.c \
 	src/tuple/tuple_features_3.c \
 	src/color/color_feature.c \
-	src/scene/scene_features.c \
 	src/scene/ray_features.c \
 	src/scene/intersection_features.c \
 	src/scene/intersection_features_2.c \
