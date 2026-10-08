@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 10:30:52 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 11:48:08 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 # include "color.h"
 # include "math.h"
 # include "matrix.h"
+# include "textures.h"
 # include "tuple.h"
 # include <stdint.h>
 # include <stdlib.h>
+
+
+
 typedef struct scene_s
 {
 	mlx_t			*mlx;
@@ -45,6 +49,7 @@ typedef struct s_material
 	double			diffuse;
 	double			specular;
 	double			shininess;
+	t_pattern 		pattern;
 }					t_material;
 
 typedef struct s_object

@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:20:01 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 10:43:16 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 11:51:01 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	render_world(t_scene *scene, t_intersections *xs, t_object *obj,
 	t_rgb	ligthing_color;
 	t_light	light;
 	t_tuple	pos;
-
+	t_rgb	c;
 	obj->material.color = (t_rgb){1, 0.2, 1};
 	lighting_pos = init_point(-10, 10, -10);
 	ligthing_color = (t_rgb){1, 1, 1};
@@ -105,65 +105,52 @@ void	render_world(t_scene *scene, t_intersections *xs, t_object *obj,
 			if (hit(xs) != NULL)
 			{
 				pos = ray_position(*ray, hit(xs)->t);
-			t_rgb c = lighting((t_lighting_parms){.m = hit(xs)->t_object->material,
+				c = lighting((t_lighting_parms){.m = hit(xs)->t_object->material,
 						.l = light, .pos = pos,
 						.eyev = nega_tup_return(ray->direction),
 						.normalv = normal_at(*hit(xs)->t_object, pos)});
 				write_pixel_mlx(scene->image, c, x, y);
-			}else
-				write_pixel_mlx(scene->image, (t_rgb){0,0,0}, x, y);
+			}
+			else
+				write_pixel_mlx(scene->image, (t_rgb){0, 0, 0}, x, y);
 		}
 	}
 }
 
+void DEBUG_print_color(t_rgb c)
+{
+	printf("%f %f %f\n", c.r, c.b, c.g);
+}
+
 int	main(int argc, char **argv)
 {
-	t_scene			scene;
-	t_intersections	xs;
-	t_object		s;
-	t_ray			r;
-	t_tuple			pos;
-	t_material		m;
-	t_tuple			eyev;
-	t_tuple			normalv;
-	t_light			l;
-	t_rgb			res;
-	t_rt_scene 		w;
-
-	if (!init_intersections(&xs))
-		return (-1);
 
 
 	// init_mlx(&scene);
 	// render_world(&scene,&xs,&s,&r);
+	t_material m;
+	m.pattern = stripe_pattern(WHITE,BLACK);
+	m.ambient = 1;
+	m.diffuse =0;
+	m.specular = 0;
+	t_tuple eye_v = init_vector(0,0,-1);
+	t_tuple nmv = init_vector(0,0,-1);
+	t_light l = point_light(init_point(0,0,-10),WHITE);
+	t_rgb c1 = lighting((t_lighting_parms){.m = m,.l=l,.pos = init_point(0.9,0,0),.eyev = eye_v,.normalv = nmv,.in_shadow = false});
+t_rgb c2 = lighting((t_lighting_parms){.m = m,.l=l,.pos = init_point(1.1,0,0),.eyev = eye_v,.normalv = nmv,.in_shadow = false});
+	DEBUG_print_color(c1);
+	DEBUG_print_color(c2);
 
-	t_object p = init_plane();
-	r = init_ray(init_point(0,10,0),init_vector(0,0,1));
-	if (!local_intersect(&xs, &p, &r))
-	{
-		free(xs.items);
-		return (-1);
-	}
-	printf("%zu\n", xs.count);
-	xs.count = 0;
-	r = init_ray(init_point(0,0,0),init_vector(0,0,1));
-	if (!local_intersect(&xs, &p, &r))
-	{
-		free(xs.items);
-		return (-1);
-	}
-	printf("%zu\n", xs.count);
-	free(xs.items);
-
-	//pos = init_point(0, 0, 0);
-	//m = material();
-	//eyev = init_vector(0, 0, -1);
-	//normalv = init_vector(0, 0, -1);
-	//l = point_light(init_point(0, 0, 10), (t_rgb){1, 1, 1});
-	//res = lighting((t_lighting_parms){.m = m, .l = l, .pos = pos, .eyev = eyev,
+	// pos = init_point(0, 0, 0);
+	// m = material();
+	// eyev = init_vector(0, 0, -1);
+	// normalv = init_vector(0, 0, -1);
+	// l = point_light(init_point(0, 0, 10), (t_rgb){1, 1, 1});
+	// res = lighting((t_lighting_parms){.m = m, .l = l, .pos = pos,
+			//.eyev = eyev,
 	//		.normalv = normalv});
-	//printf("%f %f %f ", res.r, res.b, res.g);
-	// mlx_loop(scene.mlx);
-	// mlx_terminate(scene.mlx);
+	// printf("%f %f %f ", res.r, res.b, res.g);
+	//  mlx_loop(scene.mlx);
+	//  mlx_terminate(scene.mlx);
 	return (0);
 }

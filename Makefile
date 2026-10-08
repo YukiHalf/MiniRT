@@ -57,7 +57,8 @@ SRCS = src/tuple/tuple_features.c \
 	src/scene_parser/parse_vec.c \
 	src/scene_parser/scene_checker.c \
 	src/scene_parser/scene_parser.c \
-	src/scene_parser/scene_parser2.c
+	src/scene_parser/scene_parser2.c \
+	src/textures/patterns_features.c
 MAIN = src/main.c
 
 TEST_SRC = test/test_main.c

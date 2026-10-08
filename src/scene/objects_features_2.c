@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 12:22:56 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 11:13:32 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/08 11:50:23 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ t_rgb	lighting(t_lighting_parms parm)
 	t_rgb	diffuse;
 	t_rgb	specular;
 
-	if(parm.m )
-	effective_color = mult_color_rgb(parm.m.color, parm.l.intensity);
+	if (parm.m.pattern.has_pattern)
+		effective_color = mult_color_rgb(stripe_at(parm.m.pattern, parm.pos),
+				parm.l.intensity);
+	else
+		effective_color = mult_color_rgb(parm.m.color, parm.l.intensity);
 	ambient = mult_scalar_rgb(effective_color, parm.m.ambient);
-  if (parm.in_shadow)
-    return (ambient);
+	if (parm.in_shadow)
+		return (ambient);
 	light_dot_normal = dot_tup(norm_tup(subst_tup(parm.l.pos, parm.pos)),
 			parm.normalv);
 	if (light_dot_normal < 0)
@@ -66,7 +69,8 @@ t_rgb	lighting(t_lighting_parms parm)
 	return (add_rgb(ambient, add_rgb(diffuse, specular)));
 }
 
-t_object init_plane()
+t_object	init_plane(void)
 {
-	return((t_object){.type = OBJ_PLANE, .material = material(),.pos = init_point(0,0,0),.transform = init_identy_m4()});
+	return ((t_object){.type = OBJ_PLANE, .material = material(),
+		.pos = init_point(0, 0, 0), .transform = init_identy_m4()});
 }
