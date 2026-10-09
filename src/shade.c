@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:20:17 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 13:20:18 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 12:10:31 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_rgb	shade_hit(const t_rt_scene *world, t_comps comps, t_intersections *xs)
 	parms.m = comps.object->material;
 	parms.obj = comps.object;
 	parms.l = world->lights[0];
+	parms.ambient_color = world->ambient.color;
 	parms.pos = comps.point;
 	parms.eyev = comps.eyev;
 	parms.normalv = comps.normalv;

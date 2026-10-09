@@ -4,7 +4,7 @@
 Shadows don't work properly thats 4 sure
 
 
-**Current status: not ready. The current sources build, but the freshly linked application still crashes on a scene without a light; mandatory compliance is not established.**
+**Current status: not ready. Fresh builds and ordinary window operation pass, but memory safety, input completeness, camera math, cylinder edge cases, ambient/shadow calculations, required flags, and header Norm still fail. README requirements now pass.**
 
 Reference: [miniRT subject, version 10.0](/Users/yuki/Desktop/minirt.pdf): common instructions on page 4, mandatory requirements on pages 8–12, README requirements on page 13, and bonus separation on pages 14–15.
 
@@ -16,15 +16,29 @@ This checklist covers the mandatory renderer, input safety, build rules, Norm, d
 
 ### Latest recheck evidence and limits
 
-- **Build succeeds:** `make` now links the application. The previous `in_cap()` declaration and `axis_rotation()` semicolon blockers are resolved. Production compilation still emits unused-parameter and discarded-qualifier warnings; `-Werror` remains absent from the root Makefile.
-- **Norm rerun:** all production `.c` files under `src/` pass; libft files also pass. Project headers still fail, so overall `norminette src inc` fails.
-- **Current tests:** `make ptest` reports **58 passed, 0 failed**; `make test` reports **16 pattern checks passed, 0 failed**, including a ray through intersection, `shade_hit()`, and lighting. These are not exhaustive mandatory geometry tests.
-- **Fresh executable failure:** a sphere scene with ambient and camera but no light terminates with signal 11. Invalid extension, excess arguments, and a nonexistent `.rt` file each exit 1 with `Error` and a message.
-- **Reader:** source inspection still finds `static char *buffer[BUFFER_SIZE]` indexed by file descriptor without an upper-bound check and the debug prompt. The AddressSanitizer overflow below was reproduced in the preceding audit, not rerun in this pass.
-- **Prior unresolved probes:** empty/missing-camera/directory acceptance, generated `NaN`, reversed +X camera direction, and portrait horizontal-FOV failures are previous runtime evidence. Camera source still contains the implicated orientation inversion and portrait width reduction; these numeric probes were not rerun in this pass.
-- **Cylinder:** preparation still translates the local `0..height` cylinder directly to the supplied position, treating the specified center as the base. Full cylinder correctness is not signed off.
-- **Verification limits:** build failure no longer blocks further checks. Full visual rendering, window-close behavior, exhaustive geometry/lighting cases, and leak/failure-path coverage remain unverified. This pass changed only this checklist, not implementation files.
-- **Submission:** the root Makefile still lacks `-Werror` and a bonus target. Tracked-source and missing-README observations below are retained from the preceding audit; MLX42 approval/evaluation-machine availability remain unresolved.
+This recheck exercised every section below with fresh builds, isolated probes, source inspection, and actual desktop interaction. An unchecked item can be a demonstrated failure or an explicitly stated verification limit; it is not silently assumed to fail.
+
+| Check | Current evidence |
+| --- | --- |
+| Build and existing suites | `make -B miniRT` succeeded; `make ptest`: 58 passed, 0 failed; `make test`: 16 passed, 0 failed. |
+| Required flags | Fresh `cc -Wall -Wextra -Werror -fsyntax-only` over production build sources failed with seven diagnostics in five files. |
+| Norm | `norminette src inc`: production C and libft pass; project headers fail. |
+| Parser matrix | 116 cases each in normal and ASan builds: 95 matched expectations, 21 did not, in each variant. |
+| Reader safety | Ordinary-descriptor ASan load reproduced the global-buffer-overflow at `get_next_line_bonus.c:104`. |
+| Allocation/read failures | 150 single-allocation-failure cases: 10 crashes; 29 successful returns lost required records. Injected read failures leaked retained storage; one returned a partially loaded scene as success. |
+| Render mathematics | 192 component assertions passed, 33 failed across 225 assertions; these are not 225 independent checklist items. |
+| Actual application | Sphere, plane, cylinder, and mixed scenes displayed. Escape and native close each exited 0. Resize, minimize/restore, and switching windows preserved presentation in the ordinary scene. |
+| Stress responsiveness | A 128-sphere scene stalled the desktop automation request for 20 seconds; the probe was terminated. Escape delivery was not established. |
+| CLI | Wrong extension, extra arguments, nonexistent file, invalid RGB, duplicate ambient, and unknown identifier exit 1 with an explicit error. Missing light crashes; no argument, missing camera, empty file, and directory input enter the application. |
+| Build targets/dependencies | `miniRT`, `all`, `clean`, `fclean`, `re` exercised; `bonus` fails. No unnecessary relink. Root source/header dependencies work, but libft source changes do not rebuild its archive. |
+| Source-only snapshot | A temporary copy of tracked working-tree files built and ran on this Mac without reused objects, downloading MLX42. This is not a clean Git-commit or school-platform sign-off. |
+| Documentation | Root English README, exact italicized attribution, Description, Instructions, Resources, AI disclosure, and scene examples are present; README is tracked. |
+
+**Probe scope:** parser matrices used descriptor 0 to isolate validation from the separately demonstrated ordinary-descriptor overflow. Baseline normal/ASan parser cleanup kept descriptor counts unchanged and freed tracked project allocations; injected failures did not. Geometry probes compiled current source at `-O0`, used the real `parse_line()`/preparation/shading pipeline, bypassed the unsafe file reader, and disabled specular/pattern effects. Additional numeric probes used `-O3 -ffast-math`, which changed some non-finite rejection behavior; do not treat debug probes as proof of every production floating-point case.
+
+**Cleanup evidence:** `leaks --atExit` reported zero leaks for nonexistent/unknown-identifier rejection. The graphical cylinder run reported 287 leaks / 18,720 bytes, with reported roots in Foundation/AppIntents XPC cycles and restricted memory inspection. This does not establish project-owned leaks, nor does it certify leak-free GUI cleanup.
+
+**Limits:** school approval for MLX42, the actual evaluation platform, peer understanding, all graphics-allocation failure points, concurrent file mutation, and exhaustive leak/geometry coverage remain unverified. No implementation or permanent tests were changed. Temporary probes and copied builds were removed after recording results.
 
 ## 1. P0 — Fix memory safety and crash paths
 
@@ -33,6 +47,8 @@ This checklist covers the mandatory renderer, input safety, build rules, Norm, d
 Files: `inc/libft/get_next_line/get_next_line_bonus.c`, `inc/libft/get_next_line/get_next_line_bonus.h`.
 
 Still failing in the current recheck: AddressSanitizer reproduced the global-buffer-overflow at `get_next_line_bonus.c:104` on a valid sphere scene. `buffer` remains `buffer[BUFFER_SIZE]`, with `BUFFER_SIZE` equal to `1`, while indexing uses the file descriptor.
+
+Fault injection additionally reproduced null writes at `get_next_line_bonus.c:62` and `:87`. Four of 66 error returns and four of 74 success returns retained one tracked allocation. Of the successful returns, 29 lost ambient or camera records; not every successful return under an injected allocation failure was defective. An injected read error in the second pass returned success with missing ambient/camera and retained storage. Ordinary baseline cleanup passing does not clear these failure paths.
 
 - [ ] Separate descriptor storage capacity from the number of bytes read per operation. Do not fix this merely by increasing `BUFFER_SIZE`.
 - [ ] Use correctly bounded per-descriptor storage, or a reader design appropriate for loading one scene file at a time.
@@ -61,28 +77,30 @@ Fresh executable failure: a sphere scene with ambient and camera but without a l
 
 Files: `src/main.c`, `src/error.c`, `src/scene_parser/`, `inc/parser.h`.
 
-Confirmed gaps: no-argument execution entered the application instead of reporting usage; empty files, missing-camera files, and a directory ending in `.rt` were accepted by `scene_load()`.
+Fresh executable checks: no arguments, empty input, missing camera, and a directory ending in `.rt` entered the application and exited 0 only after Escape. Missing light terminated with signal 11. Invalid RGB, duplicate ambient, and unknown identifiers produced `Error`, explicit messages, and correct source line numbers. The isolated parser also accepted missing ambient and objects-only inputs.
 
 - [ ] Require the expected command line: `./miniRT scene.rt`; reject missing and excess arguments.
-- [ ] Require the `.rt` extension and report unreadable/nonexistent inputs clearly.
+- [x] Require the `.rt` extension and report unreadable/nonexistent inputs clearly. Evidence: actual executable rejects wrong extension/nonexistent file; normal and ASan parser variants reject a permission-denied file.
 - [ ] Reject a directory named `something.rt`; do not interpret a failed read as a valid empty file.
 - [ ] Return a nonzero exit status and print `Error\n` followed by an explicit message for invalid configuration. Preserve useful line numbers for line-level errors.
-- [x] Accept elements in any order, with blank lines and one or more spaces between fields. Preserve existing tab and CRLF support. Evidence: current parser source inspection and independently compiled parser regression suite; this does not certify reader memory safety.
+- [x] Accept elements in any order, with blank lines and one or more spaces between fields. Preserve existing tab and CRLF support. Evidence: fresh mixed `cy,L,pl,C,sp,A` input, whitespace/CRLF/no-final-newline probes, and the parser suite. Reader memory safety remains separate.
 - [ ] Recognize exactly the required identifiers: `A`, `C`, `L`, `sp`, `pl`, and `cy`; reject unknown identifiers and incorrect field counts. Required dispatch is present, but `cb` and `cn` extensions are also accepted by the mandatory path; resolve bonus separation.
 - [x] Reject duplicate `A`, `C`, and `L` declarations in the mandatory format. Evidence: current duplicate guards and parser regression suite.
 - [x] Validate RGB components as integers in `[0, 255]`. Evidence: current integer parser and passing parser regression checks.
 - [x] Validate ambient and point-light brightness ratios in `[0, 1]`. Evidence: current range checks and parser regression checks. The separate non-finite position/dimension problem remains open below.
-- [ ] Validate positions as finite numeric triples and directions/axes as nonzero normalized triples, using a reasonable floating-point tolerance.
-- [ ] Validate strictly positive sphere/cylinder diameters and cylinder heights.
-- [ ] Reject malformed and non-finite numeric values without allowing them to reach matrix or intersection calculations. Current counterexample: `parse_double()` accepts a 400-digit decimal fraction whose result is `NaN`.
-- [ ] Resolve and test FOV endpoints against evaluation expectations: the PDF specifies `[0, 180]`, while the current parser accepts only `0 < FOV < 180`. Handle any accepted endpoints safely rather than producing invalid projection math.
-- [ ] Retest both parser acceptance/rejection and the complete executable. Parser-only success must not hide a later renderer crash.
+- [ ] Validate positions as finite numeric triples and directions/axes as nonzero normalized triples, using a reasonable floating-point tolerance. Ordinary malformed/zero/nonunit cases reject, but `0.` followed by 400 nines is accepted as non-finite coordinates and axes in normal/ASan probes.
+- [ ] Validate strictly positive sphere/cylinder diameters and cylinder heights. Zero and negative values reject; generated `NaN` dimensions pass normal/ASan validation.
+- [ ] Reject malformed and non-finite numeric values without allowing them to reach matrix or intersection calculations. `parse_double()` accepts the overflowing decimal fraction as `NaN`; its final check rejects infinity but not NaN. Optimized probes still accepted the non-finite sphere position.
+- [ ] Resolve and test FOV endpoints against evaluation expectations: the PDF specifies `[0, 180]`; 0/180 reject, while 0.0001/179.9999 pass. The generated-NaN FOV also passes normal/ASan validation.
+- [x] Retest both parser acceptance/rejection and the complete executable. Evidence: fresh parser matrices and actual CLI cases above. This action is complete; the observed validation failures are not fixed.
 
 ## 3. P1 — Integrate all mandatory geometry into loaded scenes
 
 Files: `src/main.c` (`prepare_parsed_scene()`), `src/scene/intersection_features*.c`, `src/scene/objects_features*.c`, `src/world.c`.
 
 ### Shared object pipeline
+
+Current numeric scope: mandatory shapes passed through actual parsing and preparation. Representative transforms and inverse-transpose normals passed, but accepting non-finite inputs prevents a blanket valid-transform guarantee. A synthetic unsupported shape value 99 also returned a successful miss rather than the documented failure; it is not a mandatory parser-produced shape.
 
 - [ ] Give every supported object a valid transform before it reaches `intersect()` or `normal_at()`.
 - [ ] Convert parsed object position, axis/normal, and dimensions into transforms consistently with the local-space shape definitions.
@@ -92,27 +110,29 @@ Files: `src/main.c` (`prepare_parsed_scene()`), `src/scene/intersection_features
 - [x] Transform normals using the inverse transpose, set vector `w = 0`, and normalize the final world-space normal. Evidence: current `normal_at()` source inspection; local shape-normal edge cases remain separate.
 - [ ] Make normal calculation return a valid result or report an explicit error for every reachable shape type. The former missing-return path now has a fallback; cylinder cap/side edge cases and explicit unsupported-type behavior still need verification.
 - [ ] Preserve the distinction between a successful miss and an actual intersection-processing failure.
-- [ ] Select the nearest nonnegative intersection correctly across mixed-object scenes.
+- [x] Select the nearest nonnegative intersection correctly across mixed-object scenes. Evidence: a sphere/plane/cylinder probe selected the cylinder at `t=1`; a `t=0` hit was accepted.
 
 ### Spheres
 
-- [x] Preserve working sphere translation and diameter-to-radius scaling from `.rt` files. Evidence: `prepare_sphere()` retains translation-times-radius-scaling and resets the local sphere to origin/radius one; this is source evidence, not visual sign-off.
-- [ ] Verify misses, two crossings, tangents, rays starting inside, and rays pointing away.
+- [x] Preserve working sphere translation and diameter-to-radius scaling from `.rt` files. Evidence: parsed center `(3,2,1)`, diameter 4 produced roots 3 and 7, with correct surface normal; the supplied sphere scene also displayed in the actual application.
+- [x] Verify misses, two crossings, tangents, rays starting inside, and rays pointing away. Evidence: translated diameter-4 sphere gave roots `3,7`, tangent `5,5`, miss, inside `-2,2`, and away `-7,-3`.
 - [ ] Verify surface normals and shadows after changing a sphere's center and diameter.
 
 ### Planes
 
-Progress since the original audit: `prepare_plane()` constructs translation and orientation through `axis_rotation()`, and parsed objects reach that helper. Full plane-render verification remains open; compilation is no longer a blocker.
+Current evidence: translated horizontal, vertical, and tilted parsed planes produced expected front/back intersections and normals. The supplied axis-aligned plane scene displayed in the actual application. Tilted-plane visual sign-off remains open; ordinary numerical diffuse/shadow checks pass only under the lighting conditions stated below.
 
 - [x] Build each parsed plane's translation and orientation from its point and normal in `prepare_parsed_scene()`. Evidence: source inspection of `prepare_object()`, `prepare_plane()`, and their application call path.
 - [x] Keep the canonical local plane consistent with the existing solver: `y = 0`, normal `(0, 1, 0)`. Evidence: current local intersection and normal code.
 - [ ] Render horizontal, vertical, translated, and tilted planes correctly from scene files.
-- [ ] Verify intersections from both sides and correct misses for parallel/coplanar rays.
-- [ ] Verify transformed plane normals, diffuse lighting, and hard shadows in a mixed sphere/plane scene.
+- [x] Verify intersections from both sides and correct misses for parallel/coplanar rays. Evidence: horizontal/vertical/tilted planes hit at `t=3` from both sides; parallel/coplanar horizontal rays missed.
+- [x] Verify transformed plane normals, diffuse lighting, and hard shadows in a mixed sphere/plane scene. Evidence: normals `(0,1,0)`, `(1,0,0)`, `(0,.6,.8)` passed sphere-occluder numerical checks with white ambient 0.2 and direct brightness 1, specular/patterns disabled. Ambient independence at other brightness/color settings still fails.
 
 ### Cylinders
 
-Cylinder preparation, dispatch, finite side/cap solvers, and normals exist, but full runtime verification remains open. `prepare_cylinder()` still interprets the parsed center as the base center. Also review the squared-direction `EPSILON` cutoff for large-radius cylinders and cap/side normal classification near the rims.
+Current numerical failures: center `(0,0,0)`, height 2 should place caps at `y=-1,+1`, but they are at `0,2`; downward cap roots are `1,3` instead of `2,4`. Diameter 2000 loses valid side roots `2000,4000` because the squared local radial direction is below `EPSILON`. A cap-coplanar rim ray misses both boundary crossings. Near the bottom rim, side normal `(0,0,-1)` becomes `(0,-1,0)`. These affect both visible geometry and occlusion.
+
+Ordinary side crossings `2,4`, inside `-1,1`, tangency `3,3`, height clipping, cap crossings, and a translated tilted cylinder's side roots `4,8` passed. These successes do not clear the center, size, and boundary failures.
 
 - [ ] Implement finite cylinder side intersections.
 - [x] Clip side hits to the cylinder's height. Evidence: `intersect_walls()` tests both roots against the current local interval `0 < y < height`. This only confirms clipping exists; the world-space center convention and boundary behavior remain open.
@@ -121,12 +141,14 @@ Cylinder preparation, dispatch, finite side/cap solvers, and normals exist, but 
 - [ ] Respect the parsed center, normalized axis, diameter, and height when preparing the object transform.
 - [ ] Support translation, arbitrary axis orientation, and changes to both diameter and height.
 - [ ] Handle tangency, axis-parallel rays, cap-parallel rays, and the side/cap boundary without invalid arithmetic or inconsistent hits.
-- [ ] Integrate cylinders into the existing dispatch and nearest-hit pipeline; do not leave their presence causing `intersect_world()` to fail and the renderer to return black.
-- [ ] Verify cylinder-only and mixed sphere/plane/cylinder scenes through the actual executable, not just isolated geometry helpers.
+- [x] Integrate cylinders into the existing dispatch and nearest-hit pipeline; do not leave their presence causing `intersect_world()` to fail and the renderer to return black. Evidence: mixed-shape nearest-hit probe selected the cylinder, and actual cylinder/mixed scenes displayed.
+- [ ] Verify cylinder-only and mixed sphere/plane/cylinder scenes through the actual executable, not just isolated geometry helpers. Both supplied scenes were opened and visually inspected; the confirmed center/edge defects prevent correctness sign-off.
 
 ## 4. P1 — Correct camera and transformation behavior
 
 Files: `src/camera.c`, `src/main.c` (`world_setup()`), `src/matrix/`, `src/hooks.c`.
+
+Fresh results: `+X` gives `-X`, `-X` gives `+X`, and `+Y` with the application's fallback up vector gives `-Y`; `+Z/-Z` pass. A near-up requested direction produced approximately `(0,-.7071,-.7071)` instead. All seven tested translated origins remained `(3,4,5)`. Requested horizontal FOV 90 degrees produced 90 in landscape/square and 53.130102 in portrait. The singular inverse of scaling `(0,1,1)` contained zero finite entries out of 16. The ordinary window resize smoke passed presentation, not camera correctness.
 
 - [ ] Correct `view_transform()` so the center ray follows the requested camera direction. The audit requested `+X` and observed a center ray pointing approximately `-X`.
 - [ ] Build a valid camera basis for arbitrary normalized directions, including directions parallel or nearly parallel to the usual up vector.
@@ -144,35 +166,39 @@ Files: `src/main.c`, `src/scene/objects_features_2.c`, `src/shade.c`, `src/world
 
 ### Ambient and diffuse
 
+Fresh probes, with specular and patterns disabled: white ambient 0.2/direct 0 gives black instead of `(0.2,0.2,0.2)`; black ambient at strength 0/direct 1 gives black instead of `(0.9,0.9,0.9)`; red ambient 0.2/direct 1 gives `(1.1,0,0)` instead of `(1.1,0.9,0.9)`. A shadow with direct brightness 0.5 gives `(0.1,0.1,0.1)` instead of `(0.2,0.2,0.2)`. `main_helper_2.c:66-73` tints the whole material by ambient color, and `objects_features_2.c:55-56` scales ambient by the point light.
+
+Finite pixel clamping/rounding passed both debug and production-flag probes: `(-1,0.5,2)` packed to `0x0080ffff`, `(0,1,0)` to `0x00ff00ff`. The non-finite diagnostic case also returned the expected bytes, but `-ffast-math` explicitly invalidates reliance on NaN/Inf behavior. Lighting tint/endpoints still prevent checking the combined color/lighting item below.
+
 - [ ] Keep the object's base color independent of the ambient-light color. Do not permanently multiply the whole material color by ambient color in `prepare_parsed_scene()`.
 - [ ] Compute ambient illumination from object color, ambient color, and ambient ratio independently of point-light brightness.
 - [ ] Compute diffuse illumination from object color, point-light brightness, and the surface/light angle independently of ambient color.
 - [ ] Verify that point-light brightness zero does not erase nonzero ambient lighting. With a white object and white ambient strength `0.2`, the audit observed black instead of RGB `(0.2, 0.2, 0.2)`.
 - [ ] Verify that black ambient color at zero ambient strength does not erase direct diffuse lighting. In the audit's white-object/white-light check with specular disabled, the result was black instead of RGB `(0.9, 0.9, 0.9)` for the current material's diffuse coefficient.
 - [ ] Verify ambient tinting, brightness endpoints, surfaces facing away from the light, and color conversion at the image boundary.
-- [ ] Test mandatory ambient/diffuse behavior with optional specular and pattern effects disabled so bonus behavior cannot mask a failure.
+- [x] Test mandatory ambient/diffuse behavior with optional specular and pattern effects disabled so bonus behavior cannot mask a failure. Evidence: all dedicated lighting probes disabled both; the failures above are mandatory-lighting failures.
 
 ### Hard shadows and inside hits
 
-- [ ] Cast shadow rays toward the light and count only blockers between the surface and the light, not objects beyond the light or behind the ray origin.
+- [x] Cast shadow rays toward the light and count only blockers between the surface and the light, not objects beyond the light or behind the ray origin. Evidence: sphere blockers at distances 5, 15, and -5 for a light at 10 passed on three plane orientations. This verifies distance selection, not all cylinder intersections or ambient brightness.
 - [ ] Preserve ambient illumination in shadow while removing direct illumination.
-- [x] Calculate `over_point` after the inside/outside normal has been finalized. Evidence: `prepare_computations()` now recomputes it after the flip. Remove the redundant earlier calculation when cleaning up; numeric/integrated re-verification remains open below.
-- [ ] Verify the displacement points along the final normal. The original audit's inside-sphere hit produced `-EPSILON` instead of `+EPSILON`; the subsequent source correction has not yet received a dedicated numeric recheck.
-- [ ] Verify self-shadow avoidance from both outside and inside objects, including scenes with a light inside a sphere/cylinder.
-- [ ] Retest cast shadows between different objects and on differently oriented planes.
+- [x] Calculate `over_point` after the inside/outside normal has been finalized. Evidence: source and fresh sphere/cylinder inside-hit probes; the earlier redundant calculation remains.
+- [x] Verify the displacement points along the final normal. Sphere and cylinder inside hits produced `dot(over_point-point, normal)=9.99999999995e-6`, matching `+EPSILON`.
+- [ ] Verify self-shadow avoidance from both outside and inside objects, including scenes with a light inside a sphere/cylinder. Ordinary inside sphere/cylinder cases passed with the light at the ray origin; near-rim cylinder normals still make a universal sign-off unsafe.
+- [x] Retest cast shadows between different objects and on differently oriented planes. Evidence: sphere occluders on horizontal, vertical, and tilted planes passed the ordinary placement checks. This action does not clear the ambient/cylinder defects or the user's reported shadow problem.
 - [ ] Check and propagate a failed `intersect_world()` call from shadow calculation.
 
 ## 6. P2 — Preserve responsive window behavior and cleanup
 
 Files: `src/app.c`, `src/hooks.c`, `src/render.c`.
 
-- [ ] Preserve successful window creation and image presentation on the evaluation platform.
-- [ ] Preserve Escape closing the window and exiting successfully.
-- [ ] Preserve the native window close button closing the program successfully.
-- [ ] Preserve switching windows, minimization/restoration, and resizing without losing the rendered image or corrupting state.
-- [ ] Verify responsiveness while rendering a demanding scene, not only after rendering finishes. `render_step()` currently renders all remaining rows in one hook invocation; limit work per invocation if this blocks event handling.
-- [ ] Verify that repeated resize/render cycles and both close paths release application-owned resources.
-- [ ] Verify graphics initialization/allocation failures exit with an explicit error and correct cleanup.
+- [ ] Preserve successful window creation and image presentation on the evaluation platform. Passed on this Mac for supplied sphere/plane/cylinder/mixed scenes; the school's evaluation platform is not established.
+- [x] Preserve Escape closing the window and exiting successfully. Actual ordinary sphere and mixed-scene runs exited 0.
+- [x] Preserve the native window close button closing the program successfully. Actual plane-scene run exited 0 after clicking `AXCloseButton`.
+- [x] Preserve switching windows, minimization/restoration, and resizing without losing the rendered image or corrupting state. Actual sphere scene survived Finder switching, minimize/restore, portrait/landscape resize cycles, and returned to an 800x650 window with the image visible. Camera FOV correctness is separate.
+- [ ] Verify responsiveness while rendering a demanding scene, not only after rendering finishes. A 128-sphere startup stalled the accessibility request for 20 seconds and required termination. The request did not establish Escape delivery; `render_step()` still renders the full frame in one hook.
+- [ ] Verify that repeated resize/render cycles and both close paths release application-owned resources. Runtime interaction passed; graphical exit leak output contained 287 leaks / 18,720 bytes rooted in framework XPC cycles. Ownership could not be fully attributed under restricted inspection.
+- [ ] Verify graphics initialization/allocation failures exit with an explicit error and correct cleanup. Source has error returns/cleanup calls, but individual MLX allocation failures were not injected; no runtime sign-off.
 
 ## 7. P2 — Meet build, library, and Norm requirements
 
@@ -181,15 +207,15 @@ Files: `Makefile`, `inc/libft/Makefile`, `src/`, `inc/`.
 ### Build and dependencies
 
 - [ ] Build the required executable name `miniRT` using `cc` and `-Wall -Wextra -Werror` for project sources. The main Makefile currently omits `-Werror`.
-- [ ] Fix all required-flag compilation errors, including the missing normal return, matrix function-address check, and const mismatch between `shade_hit()` and `is_shadowed()`.
-- [ ] Provide working `$(NAME)`, `all`, `clean`, `fclean`, and `re` targets. The PDF's Makefile table also lists `bonus`; the root Makefile currently has no such target.
-- [ ] Preserve the verified no-unnecessary-relink behavior.
-- [ ] Verify rebuilds after source/header changes, including changes inside libft, rather than relying on an already existing `libft.a`.
-- [x] Compile libft through its own Makefile and ensure the required library sources are part of the submitted repository. Evidence: the root Makefile invokes the libft Makefile, and `git ls-files` confirms the library sources are tracked. Source-change dependency propagation remains unchecked.
+- [ ] Fix all required-flag compilation errors. Seven diagnostics remain: unused `shape` in `intersection_features_5.c`, unused `k` in `matrix_features_3.c`, function-address guard in `matrix_features_4.c`, three discarded-const calls in `mlx_features.c`, and the scene const mismatch in `shade.c`. The old missing normal return is no longer a compile blocker.
+- [ ] Provide working `$(NAME)`, `all`, `clean`, `fclean`, and `re` targets. These targets passed in a disposable tracked-source copy, but the PDF-listed `bonus` target still fails with “No rule to make target”.
+- [x] Preserve the verified no-unnecessary-relink behavior. `make -n all` after the full build scheduled nothing.
+- [ ] Verify rebuilds after source/header changes, including changes inside libft, rather than relying on an already existing `libft.a`. `make -n -W src/main.c all` and `-W inc/scene.h` scheduled compilation; `-W inc/libft/ft_strlen.c` scheduled nothing, and `-W inc/libft/libft.h` did not rebuild libft.
+- [x] Compile libft through its own Makefile and ensure the required library sources are part of the submitted repository. Fresh source-only build invoked libft's Makefile; the library sources are tracked. Root-to-libft change propagation fails as described above.
 - [ ] Confirm with the school that MLX42 is accepted for this subject. The supplied PDF explicitly names MiniLibX; this approval was not established by the audit.
 - [ ] Ensure the approved graphics library and required build dependencies are available on the evaluation machine. The current build clones MLX42 from the network when absent.
-- [ ] Review `fclean`: it currently deletes the entire `MLX42` directory. Do not delete required vendored source files or make rebuilding depend on an unavailable download.
-- [ ] Verify project code uses only the authorized external functions: the subject's listed I/O/allocation/error functions, math functions, the approved graphics library, and `gettimeofday()`, plus your authorized libft implementations.
+- [ ] Review `fclean`: it currently deletes the entire `MLX42` directory. Confirmed by executing it in the disposable copy. `re` succeeded only after downloading/building MLX42 again; do not rely on unavailable evaluation-network access.
+- [ ] Verify project code uses only the authorized external functions. Fresh non-LTO project/libft object-symbol review found authorized I/O/allocation/math calls and MLX calls, plus compiler-generated stack/memory helpers (no explicit libc `memcpy`/`memset` calls in source). No additional direct function violation was found, but MLX42 approval remains unresolved.
 - [ ] Keep optional bonus behavior/build rules separate as required by the subject. Do not treat patterns, specular reflection, or colored/multiple lights as completion of missing mandatory features.
 
 ### Norm
@@ -202,19 +228,19 @@ Files: `Makefile`, `inc/libft/Makefile`, `src/`, `inc/`.
 
 ## 8. P2 — Add the required root README
 
-The audit found no root `README.md`. This checklist does not fulfill that requirement.
+`README.md` now exists at the repository root, is tracked, and meets the supplied PDF's documentation requirements. The documented sample scene commands were exercised; known limitations are disclosed rather than presented as completed mandatory features.
 
-- [ ] Create `README.md` at the repository root and write it in English.
-- [ ] Use the subject's required italicized first line, with the actual 42 login(s): `This project has been created as part of the 42 curriculum by ...`.
-- [ ] Add a **Description** section explaining the project and its purpose.
-- [ ] Add an **Instructions** section covering prerequisites, compilation, execution with an `.rt` file, and exit controls.
-- [ ] Add a **Resources** section containing the references actually used.
-- [ ] Explain how AI was used, including the tasks and project parts it assisted with.
-- [ ] Document the supported scene format and working example commands without claiming unsupported features are implemented.
+- [x] Create `README.md` at the repository root and write it in English.
+- [x] Use the subject's required italicized first line, with the actual 42 logins: `This project has been created as part of the 42 curriculum by sdarius-, rnauke.`
+- [x] Add a **Description** section explaining the project and its purpose.
+- [x] Add an **Instructions** section covering prerequisites, compilation, execution with an `.rt` file, and exit controls.
+- [x] Add a **Resources** section containing the references actually used. The Ray Tracer Challenge and project/library documentation are identified; supplementary references are labeled.
+- [x] Explain how AI was used, including the tasks and project parts it assisted with.
+- [x] Document the supported scene format and working example commands without claiming unsupported features are implemented. The README explicitly discloses incomplete mandatory compliance.
 
 ## 9. P2 — Prepare a focused defense scene set
 
-The subject recommends scenes that make each feature easy to inspect.
+The subject recommends scenes that make each feature easy to inspect. Current `scenes/` contains four files: varied spheres, axis-aligned planes, three cardinal-axis cylinders all with the same dimensions, and a mixed scene that also contains cone/cube extensions. These were inspected and opened, but do not cover every category below. Temporary probes exercised many missing cases and were removed; they do not substitute for a persistent defense scene set.
 
 - [ ] Spheres: different centers/diameters, overlapping objects, tangent/miss cases, and a camera inside a sphere.
 - [ ] Planes: horizontal, vertical, tilted, translated, and viewed from either side.
@@ -228,7 +254,7 @@ The subject recommends scenes that make each feature easy to inspect.
 
 ## 10. Historical audit baseline — not current executable sign-off
 
-These checkmarks record successful cases from the previous build. The present build fails, so they must not be read as current full-application results. The parser suite was separately rebuilt and rerun as documented above. Re-run all affected executable checks after fixing compilation.
+These checkmarks retain the original successful baseline, not additional current evidence. The current build now succeeds; the fresh audit and its narrower pass/fail results are recorded above. Historical success never overrides a current failure.
 
 - [x] The normal `make` build completed with its current flags and available dependencies.
 - [x] A subsequent `make -n all` scheduled no unnecessary rebuild or relink.
@@ -251,9 +277,9 @@ These checkmarks record successful cases from the previous build. The present bu
 - [ ] Invalid configuration is rejected cleanly; successful and failed runs have verified resource cleanup.
 - [ ] The executable builds with the required flags and the submitted code passes Norm.
 - [ ] Required Makefile targets, library availability, and school approval for the graphics library are resolved.
-- [ ] The root README satisfies every required section and disclosure.
-- [ ] Required files, including library sources, are actually included in the submission. Review `.gitignore`, which currently ignores `libft` and `MLX42`; do not assume files present locally are submitted.
-- [ ] A fresh checkout builds and runs on the evaluation platform without depending on stale local objects or unsubmitted files.
+- [x] The root README satisfies every required section and disclosure. Verified against the supplied version-10.0 PDF.
+- [ ] Required files, including library sources, are actually included in the submission. README, project sources, scenes, and libft are tracked. MLX42 remains downloaded rather than submitted; required-library approval/availability remains unresolved.
+- [ ] A fresh checkout builds and runs on the evaluation platform without depending on stale local objects or unsubmitted files. A tracked working-tree source-only snapshot built and ran on this Mac after downloading MLX42; this does not establish school-platform, committed-tree, or offline availability.
 - [ ] Review the implementation with a peer and be able to explain and modify the code during evaluation.
 
 **Do not mark mandatory complete based only on a working sphere screenshot, passing pattern checks, or the existing parser suite.**

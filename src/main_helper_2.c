@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/09 10:31:10 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/09 10:33:11 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 12:08:09 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,7 @@ void	prepare_parsed_scene(t_rt_scene *scene)
 		o->material = material();
 		o->material.color = o->color;
 		if (scene->has_ambient)
-		{
 			o->material.ambient = scene->ambient.ratio;
-			o->material.color = mult_color_rgb(o->material.color,
-					scene->ambient.color);
-		}
 		set_transform(o, init_identy_m4());
 		prepare_object(o);
 		i++;
