@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/05 13:20:47 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 10:46:23 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 10:11:13 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ bool	local_intersect(t_intersections *xs, t_object *shape,
 		t = -local_ray->origin.y / local_ray->direction.y;
 		return (append_intersection(xs, t, shape));
 	}
-  if (shape->type == OBJ_CUBE)
-    return (cube_intersect(shape, local_ray, xs));
-  if (shape->type == OBJ_CYLINDER)
-    return (cylinder_intersect(shape, local_ray, xs));
-  if (shape->type == OBJ_CONE)
-    return (cone_intersect(shape, local_ray, xs));
+	if (shape->type == OBJ_CUBE)
+		return (cube_intersect(shape, local_ray, xs));
+	if (shape->type == OBJ_CYLINDER)
+		return (cylinder_intersect(shape, local_ray, xs));
+	if (shape->type == OBJ_CONE)
+		return (cone_intersect(shape, local_ray, xs));
 	return (true);
 }

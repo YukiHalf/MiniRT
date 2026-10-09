@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:17:14 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 13:17:16 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 10:11:31 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static const char	*dispatch(t_context *c, t_line_type kind, char **tok, int n)
 		return (parse_plane(c, tok, n));
 	if (kind == T_CYLINDER)
 		return (parse_cylinder(c, tok, n));
-  if (kind == T_CUBE)
-    return (parse_cube(c, tok, n));
-  if (kind == T_CONE)
-    return (parse_cone(c, tok, n));
+	if (kind == T_CUBE)
+		return (parse_cube(c, tok, n));
+	if (kind == T_CONE)
+		return (parse_cone(c, tok, n));
 	return ("unknown element identifier");
 }
 
