@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 12:23:14 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 10:46:04 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,4 +189,18 @@ bool         cube_intersect(t_object *c, const t_ray *r, t_intersections *xs);
 bool    	cylinder_intersect(t_object *cy, const t_ray *r, t_intersections *xs);
 /*calculates cone intersections from a local-space ray, without transforming it*/
 bool       cone_intersect(t_object *cn, const t_ray *r, t_intersections *xs);
+/*add heredoc*/
+bool	intersect_cone_walls(t_object *cn, const t_ray *r,
+		t_intersections *xs);
+/*add heredoc*/
+bool	append_cone_hit(t_object *cn, const t_ray *r, t_intersections *xs,
+		double t);
+/*add heredoc*/
+bool	cylinder_intersect(t_object *cy, const t_ray *r, t_intersections *xs);
+/*add heredoc*/
+bool	intersect_walls(t_object *cy, const t_ray *r, t_intersections *xs);
+/*add heredoc*/
+bool	intersect_caps(t_object *cy, const t_ray *r, t_intersections *xs);
+/*add heredoc*/
+bool	in_cap(const t_ray *r, double t);
 #endif

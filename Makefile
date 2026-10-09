@@ -30,6 +30,8 @@ SRCS = src/tuple/tuple_features.c \
 	src/scene/intersection_features.c \
 	src/scene/intersection_features_2.c \
 	src/scene/intersection_features_3.c \
+	src/scene/intersection_features_4.c \
+	src/scene/intersection_features_5.c \
 	src/scene/objects_features.c \
 	src/scene/objects_features_2.c \
 	src/matrix/matrix_features.c \
@@ -57,7 +59,9 @@ SRCS = src/tuple/tuple_features.c \
 	src/scene_parser/scene_checker.c \
 	src/scene_parser/scene_parser.c \
 	src/scene_parser/scene_parser2.c \
-	src/textures/patterns_features.c
+	src/textures/patterns_features.c \
+	src/main_helper.c \
+	src/main_helper_2.c 
 MAIN = src/main.c
 
 TEST_SRC = test/test_main.c
