@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 13:46:42 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/09 10:16:33 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 10:19:20 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,44 +19,6 @@ bool	intersect(t_intersections *xs, t_object *shape, const t_ray *ray)
 
 	local_ray = transform_ray(*ray, inverse_m4(shape->transform.m));
 	return (local_intersect(xs, shape, &local_ray));
-}
-
-t_tuple	local_normal_at(t_object shape, t_tuple local_point)
-{
-	double	maxc;
-
-	if (shape.type == OBJ_SPHERE)
-		return (subst_tup(local_point, shape.pos));
-	if (shape.type == OBJ_PLANE)
-		return (init_vector(0, 1, 0));
-	if (shape.type == OBJ_CUBE)
-	{
-		maxc = fmax(fabs(local_point.x), fmax(fabs(local_point.y),
-					fabs(local_point.z)));
-		if (maxc == fabs(local_point.x))
-			return (init_vector(local_point.x, 0, 0));
-		else if (maxc == fabs(local_point.y))
-			return (init_vector(0, local_point.y, 0));
-		return (init_vector(0, 0, local_point.z));
-	}
-	if (shape.type == OBJ_CYLINDER)
-	{
-		if (fabs(local_point.y) < EPSILON)
-			return (init_vector(0, -1, 0));
-		if (fabs(local_point.y - shape.height) < EPSILON)
-			return (init_vector(0, 1, 0));
-		return (init_vector(local_point.x, 0, local_point.z));
-	}
-	if (shape.type == OBJ_CONE)
-	{
-		if (fabs(local_point.y + shape.height) < EPSILON)
-			return (init_vector(0, -1, 0));
-		maxc = sqrt(powl(local_point.x, 2) + powl(local_point.z, 2));
-		if (local_point.y > 0)
-			maxc = -maxc;
-		return (init_vector(local_point.x, maxc, local_point.z));
-	}
-	return (init_vector(0, 1, 0));
 }
 
 static void	check_axis(double origin, double direction, double minmax[2])
@@ -113,6 +75,3 @@ bool	in_cap(const t_ray *r, double t)
 	z = r->origin.z + t * r->direction.z;
 	return (x * x + z * z <= 1.0);
 }
-
-
-

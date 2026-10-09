@@ -6,20 +6,19 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/09 10:11:48 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/09 10:13:20 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 10:18:27 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 #include <math.h>
 
-
 bool	intersect_caps(t_object *cy, const t_ray *r, t_intersections *xs)
 {
 	double	t;
 
 	if (fabs(r->direction.y) < EPSILON)
-		return (true); /* parallel to the caps */
+		return (true);
 	t = (0.0 - r->origin.y) / r->direction.y;
 	if (in_cap(r, t) && !append_intersection(xs, t, cy))
 		return (false);
@@ -74,8 +73,7 @@ bool	append_cone_hit(t_object *cn, const t_ray *r, t_intersections *xs,
 	return (append_intersection(xs, t, cn));
 }
 
-bool	intersect_cone_walls(t_object *cn, const t_ray *r,
-		t_intersections *xs)
+bool	intersect_cone_walls(t_object *cn, const t_ray *r, t_intersections *xs)
 {
 	double	a;
 	double	b;
@@ -92,10 +90,7 @@ bool	intersect_cone_walls(t_object *cn, const t_ray *r,
 		return (true);
 	disc = b * b - 4.0 * a * c;
 	if (fabs(a) < EPSILON)
-	{
-		t[0] = -c / b;
-		return (append_cone_hit(cn, r, xs, t[0]));
-	}
+		return (t[0] = -c / b, append_cone_hit(cn, r, xs, t[0]));
 	if (disc < 0.0)
 		return (true);
 	t[0] = (-b - sqrt(disc)) / (2.0 * a);

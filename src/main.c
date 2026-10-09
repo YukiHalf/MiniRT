@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:19:07 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 13:24:50 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 10:19:56 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void	print_scene_error(const t_rt_scene *scene, const char *error)
 	}
 }
 
-
 /*returns the rotation matrix that turns the canonical +y axis into axis*/
 static t_mat4	axis_rotation(t_tuple axis)
 {
@@ -43,14 +42,20 @@ static t_mat4	axis_rotation(t_tuple axis)
 	t_tuple	e0;
 	t_tuple	e2;
 
-  e0 = norm_tup(cross_arr(axis, init_vector(0, 1, 0)));
-  if (fabs(axis.y) > 0.9)
-	  e0 = norm_tup(cross_arr(axis, init_vector(0, 0, 1)));
+	e0 = norm_tup(cross_arr(axis, init_vector(0, 1, 0)));
+	if (fabs(axis.y) > 0.9)
+		e0 = norm_tup(cross_arr(axis, init_vector(0, 0, 1)));
 	e2 = cross_arr(e0, axis);
 	r = init_identy_m4();
-	r.m[0][0] = e0.x; r.m[1][0] = e0.y; r.m[2][0] = e0.z;
-	r.m[0][1] = axis.x; r.m[1][1] = axis.y; r.m[2][1] = axis.z;
-	r.m[0][2] = e2.x; r.m[1][2] = e2.y; r.m[2][2] = e2.z;
+	r.m[0][0] = e0.x;
+	r.m[1][0] = e0.y;
+	r.m[2][0] = e0.z;
+	r.m[0][1] = axis.x;
+	r.m[1][1] = axis.y;
+	r.m[2][1] = axis.z;
+	r.m[0][2] = e2.x;
+	r.m[1][2] = e2.y;
+	r.m[2][2] = e2.z;
 	return (r);
 }
 
@@ -119,8 +124,7 @@ static void	prepare_cone(t_object *o)
 	t_tuple	apex;
 
 	spin = axis_rotation(norm_tup(o->axis));
-	apex = add_tup(o->pos,
-		multy_tup_return(norm_tup(o->axis), o->height));
+	apex = add_tup(o->pos, multy_tup_return(norm_tup(o->axis), o->height));
 	move = init_translation(apex.x, apex.y, apex.z);
 	scale = init_scaling(o->radius / o->height, 1.0, o->radius / o->height);
 	set_transform(o, multy_m4(move.m, multy_m4(spin.m, scale.m).m));
