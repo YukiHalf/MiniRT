@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:16:09 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 13:16:11 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/09 10:27:28 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,6 @@ const char	*scene_load(t_rt_scene *scene, const char *path)
 	ctx.light_i = 0;
 	error = read_scene_file(path, parse_line, &ctx, &ln);
 	if (error)
-	{
-		scene->err_line = ln;
-		scene_free(scene);
-	}
+		return (scene->err_line = ln, scene_free(scene), error);
 	return (error);
 }
