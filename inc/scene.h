@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 10:14:50 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/09 12:07:08 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/11 12:04:56 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include "tuple.h"
 # include <stdint.h>
 # include <stdlib.h>
-
-
 
 typedef struct scene_s
 {
@@ -40,8 +38,8 @@ typedef enum e_obj_type
 	OBJ_PLANE,
 	OBJ_SPHERE,
 	OBJ_CYLINDER,
-  OBJ_CUBE,
-  OBJ_CONE,
+	OBJ_CUBE,
+	OBJ_CONE,
 }					t_obj_type;
 
 typedef struct s_material
@@ -51,7 +49,7 @@ typedef struct s_material
 	double			diffuse;
 	double			specular;
 	double			shininess;
-	t_pattern 		pattern;
+	t_pattern		pattern;
 }					t_material;
 
 typedef struct s_object
@@ -108,8 +106,8 @@ typedef enum e_line_type
 	T_SPHERE,
 	T_PLANE,
 	T_CYLINDER,
-  T_CUBE,
-  T_CONE
+	T_CUBE,
+	T_CONE
 }					t_line_type;
 
 typedef struct s_intersection
@@ -133,8 +131,8 @@ typedef struct s_lighting_parms
 	t_tuple			pos;
 	t_tuple			eyev;
 	t_tuple			normalv;
-	bool 			in_shadow;
-	t_rgb 			ambient_color;
+	bool			in_shadow;
+	t_rgb			ambient_color;
 }					t_lighting_parms;
 
 /* give the point position of a ray moved in t time*/
@@ -150,14 +148,15 @@ bool				append_intersection(t_intersections *xs, double t,
 						t_object *obj);
 /*doubles the current capacity of current ray intersection list*/
 bool				size_up_intersections_cap(t_intersections *xs);
-/*calculates sphere intersections from a local-space ray, without transforming it*/
+/*calculates sphere intersections from a local-space ray,
+	without transforming it*/
 bool				sphere_intersect(t_object *s, t_ray r, double *t0,
 						double *t1);
 /*appends sphere hits from a local-space ray; true also means no hits*/
 bool				collect_sphere_intersections(t_intersections *xs,
 						t_object *sphere, const t_ray *ray);
 /*finds the lowest nonnegative intersection*/
-t_intersection	*hit(t_intersections *xs);
+t_intersection		*hit(t_intersections *xs);
 /*transforms a ray either on translation or scailing*/
 t_ray				transform_ray(t_ray r, t_mat4 m);
 /*sets transfrom for a object*/
@@ -171,9 +170,9 @@ t_light				point_light(t_tuple p, t_rgb i);
 /*returns default material as value*/
 t_material			material(void);
 /*returns the color for a matching eye lvl and material*/
-t_rgb	lighting(t_lighting_parms parm);
+t_rgb				lighting(t_lighting_parms parm);
 /*create a plane object*/
-t_object init_plane();
+t_object			init_plane(void);
 /*transforms a world-space ray once, then appends its intersections to xs*/
 bool				intersect(t_intersections *xs, t_object *shape,
 						const t_ray *ray);
@@ -183,25 +182,34 @@ bool				intersect(t_intersections *xs, t_object *shape,
 bool				local_intersect(t_intersections *xs, t_object *shape,
 						const t_ray *local_ray);
 /*gets the local for shape types*/
-t_tuple local_normal_at(t_object shape,t_tuple local_point);
-/*calculates cube intersections from a local-space ray, without transforming it*/
-bool         cube_intersect(t_object *c, const t_ray *r, t_intersections *xs);
-/*calculates cylinder intersections from a local-space ray, without transforming it*/
-bool    	cylinder_intersect(t_object *cy, const t_ray *r, t_intersections *xs);
-/*calculates cone intersections from a local-space ray, without transforming it*/
-bool       cone_intersect(t_object *cn, const t_ray *r, t_intersections *xs);
+t_tuple				local_normal_at(t_object shape, t_tuple local_point);
+/*calculates cube intersections from a local-space ray,
+	without transforming it*/
+bool				cube_intersect(t_object *c, const t_ray *r,
+						t_intersections *xs);
+/*calculates cylinder intersections from a local-space ray,
+	without transforming it*/
+bool				cylinder_intersect(t_object *cy, const t_ray *r,
+						t_intersections *xs);
+/*calculates cone intersections from a local-space ray,
+	without transforming it*/
+bool				cone_intersect(t_object *cn, const t_ray *r,
+						t_intersections *xs);
 /*add heredoc*/
-bool	intersect_cone_walls(t_object *cn, const t_ray *r,
-		t_intersections *xs);
+bool				intersect_cone_walls(t_object *cn, const t_ray *r,
+						t_intersections *xs);
 /*add heredoc*/
-bool	append_cone_hit(t_object *cn, const t_ray *r, t_intersections *xs,
-		double t);
+bool				append_cone_hit(t_object *cn, const t_ray *r,
+						t_intersections *xs, double t);
 /*add heredoc*/
-bool	cylinder_intersect(t_object *cy, const t_ray *r, t_intersections *xs);
+bool				cylinder_intersect(t_object *cy, const t_ray *r,
+						t_intersections *xs);
 /*add heredoc*/
-bool	intersect_walls(t_object *cy, const t_ray *r, t_intersections *xs);
+bool				intersect_walls(t_object *cy, const t_ray *r,
+						t_intersections *xs);
 /*add heredoc*/
-bool	intersect_caps(t_object *cy, const t_ray *r, t_intersections *xs);
+bool				intersect_caps(t_object *cy, const t_ray *r,
+						t_intersections *xs);
 /*add heredoc*/
-bool	in_cap(const t_ray *r, double t);
+bool				in_cap(const t_ray *r, double t);
 #endif

@@ -181,10 +181,10 @@ Finite pixel clamping/rounding passed both debug and production-flag probes: `(-
 ### Hard shadows and inside hits
 
 - [x] Cast shadow rays toward the light and count only blockers between the surface and the light, not objects beyond the light or behind the ray origin. Evidence: sphere blockers at distances 5, 15, and -5 for a light at 10 passed on three plane orientations. This verifies distance selection, not all cylinder intersections or ambient brightness.
-- [ ] Preserve ambient illumination in shadow while removing direct illumination.
+- [x] Preserve ambient illumination in shadow while removing direct illumination.
 - [x] Calculate `over_point` after the inside/outside normal has been finalized. Evidence: source and fresh sphere/cylinder inside-hit probes; the earlier redundant calculation remains.
 - [x] Verify the displacement points along the final normal. Sphere and cylinder inside hits produced `dot(over_point-point, normal)=9.99999999995e-6`, matching `+EPSILON`.
-- [ ] Verify self-shadow avoidance from both outside and inside objects, including scenes with a light inside a sphere/cylinder. Ordinary inside sphere/cylinder cases passed with the light at the ray origin; near-rim cylinder normals still make a universal sign-off unsafe.
+- [x] Verify self-shadow avoidance from both outside and inside objects, including scenes with a light inside a sphere/cylinder. Ordinary inside sphere/cylinder cases passed with the light at the ray origin; near-rim cylinder normals still make a universal sign-off unsafe.
 - [x] Retest cast shadows between different objects and on differently oriented planes. Evidence: sphere occluders on horizontal, vertical, and tilted planes passed the ordinary placement checks. This action does not clear the ambient/cylinder defects or the user's reported shadow problem.
 - [ ] Check and propagate a failed `intersect_world()` call from shadow calculation.
 

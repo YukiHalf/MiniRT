@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 13:19:49 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/07 13:19:12 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/11 12:05:00 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct enviroment_s
 	t_tuple	wind;
 }			t_enviroment;
 
-
 /*creates and alocates a point and returns it's address*/
 t_tuple		init_point(double x, double y, double z);
 /*creates and alocates a vector and returns it's address*/
@@ -70,8 +69,8 @@ double		dot_tup(t_tuple arr1, t_tuple arr2);
 /*returns another vector instead of a scalar.*/
 t_tuple		cross_arr(t_tuple arr1, t_tuple arr2);
 /*multiplies a tuple by a value and it returns a tuple by value*/
-t_tuple	multy_tup_return(t_tuple arr, double x);
+t_tuple		multy_tup_return(t_tuple arr, double x);
 /*negates the tup but return*/
-t_tuple	nega_tup_return(t_tuple arr);
+t_tuple		nega_tup_return(t_tuple arr);
 /*returns a true or false if a point is in shadow*/
 #endif
