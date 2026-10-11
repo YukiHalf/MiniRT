@@ -156,7 +156,7 @@ Fresh results: `+X` gives `-X`, `-X` gives `+X`, and `+Y` with the application's
 - [ ] Keep the requested FOV horizontal for every aspect ratio. The audit requested `90` degrees at `200x400` and measured approximately `53.13` degrees horizontally.
 - [ ] Preserve the camera pose and horizontal FOV when the window is resized.
 - [ ] Verify object translation/rotation and light translation from scene data. Sphere and point-light rotation are not required by the subject.
-- [ ] Fix the matrix guard that checks the function address: `if (!is_invertible_m4)` must call the function with the matrix.
+- [x] Fix the matrix guard that checks the function address: `if (!is_invertible_m4)` must call the function with the matrix.
 - [ ] Handle singular transforms explicitly instead of dividing by a zero determinant or pretending an invalid inverse is usable.
 - [ ] Verify the transformation behavior through loaded scenes; having translation/rotation helper functions alone is not sufficient.
 
@@ -170,12 +170,12 @@ Fresh probes, with specular and patterns disabled: white ambient 0.2/direct 0 gi
 
 Finite pixel clamping/rounding passed both debug and production-flag probes: `(-1,0.5,2)` packed to `0x0080ffff`, `(0,1,0)` to `0x00ff00ff`. The non-finite diagnostic case also returned the expected bytes, but `-ffast-math` explicitly invalidates reliance on NaN/Inf behavior. Lighting tint/endpoints still prevent checking the combined color/lighting item below.
 
-- [ ] Keep the object's base color independent of the ambient-light color. Do not permanently multiply the whole material color by ambient color in `prepare_parsed_scene()`.
-- [ ] Compute ambient illumination from object color, ambient color, and ambient ratio independently of point-light brightness.
-- [ ] Compute diffuse illumination from object color, point-light brightness, and the surface/light angle independently of ambient color.
-- [ ] Verify that point-light brightness zero does not erase nonzero ambient lighting. With a white object and white ambient strength `0.2`, the audit observed black instead of RGB `(0.2, 0.2, 0.2)`.
-- [ ] Verify that black ambient color at zero ambient strength does not erase direct diffuse lighting. In the audit's white-object/white-light check with specular disabled, the result was black instead of RGB `(0.9, 0.9, 0.9)` for the current material's diffuse coefficient.
-- [ ] Verify ambient tinting, brightness endpoints, surfaces facing away from the light, and color conversion at the image boundary.
+- [x] Keep the object's base color independent of the ambient-light color. Do not permanently multiply the whole material color by ambient color in `prepare_parsed_scene()`.
+- [x] Compute ambient illumination from object color, ambient color, and ambient ratio independently of point-light brightness.
+- [x] Compute diffuse illumination from object color, point-light brightness, and the surface/light angle independently of ambient color.
+- [x] Verify that point-light brightness zero does not erase nonzero ambient lighting. With a white object and white ambient strength `0.2`, the audit observed black instead of RGB `(0.2, 0.2, 0.2)`.
+- [x] Verify that black ambient color at zero ambient strength does not erase direct diffuse lighting. In the audit's white-object/white-light check with specular disabled, the result was black instead of RGB `(0.9, 0.9, 0.9)` for the current material's diffuse coefficient.
+- [x] Verify ambient tinting, brightness endpoints, surfaces facing away from the light, and color conversion at the image boundary.
 - [x] Test mandatory ambient/diffuse behavior with optional specular and pattern effects disabled so bonus behavior cannot mask a failure. Evidence: all dedicated lighting probes disabled both; the failures above are mandatory-lighting failures.
 
 ### Hard shadows and inside hits
