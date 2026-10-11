@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 09:52:37 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 13:13:20 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/11 11:07:20 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_mat4	inverse_m4(const double m[static 4][4])
 	int		col;
 	double	c;
 
-	if (!is_invertible_m4)
+	if (!is_invertible_m4(m))
 	{
 		ft_putendl_fd("Not invertible", STDERR_FILENO);
 		return (init_m4(m));
