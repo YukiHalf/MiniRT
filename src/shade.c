@@ -6,11 +6,12 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:20:17 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/09 12:10:31 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/11 12:01:19 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
+#include <stdio.h>
 
 static bool	is_shadowed(t_tuple point, t_rt_scene *scene, t_intersections *xs)
 {
@@ -25,7 +26,7 @@ static bool	is_shadowed(t_tuple point, t_rt_scene *scene, t_intersections *xs)
 	xs->count = 0;
 	intersect_world(scene, &ray, xs);
 	h = hit(xs);
-	return (h != NULL && h->t < distance);
+	return (h != NULL && h->t < distance - EPSILON);
 }
 
 t_rgb	shade_hit(const t_rt_scene *world, t_comps comps, t_intersections *xs)
