@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:18:12 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 13:18:13 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/12 09:42:06 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_mat4	view_transform(t_tuple from, t_tuple to, t_tuple up)
 	setup_orientation(orientation, forward, left);
 	orient = init_m4(orientation);
 	move = init_translation(-from.x, -from.y, -from.z);
-	return (multy_m4(inverse_m4(orient.m).m, move.m));
+	return (multy_m4(orient.m, move.m));
 }
 
 void	camera_init(t_cam *cam, int hsize, int vsize, double field_of_view)
