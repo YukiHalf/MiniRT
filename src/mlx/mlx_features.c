@@ -22,20 +22,20 @@ int	init_mlx(t_scene *scene)
 	scene->mlx = mlx_init(WIN_W, WIN_H, "miniRT", false);
 	if (!scene->mlx)
 	{
-		ft_putendl_fd(mlx_strerror(mlx_errno), STDERR_FILENO);
+		ft_putendl_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (-1);
 	}
 	scene->image = mlx_new_image(scene->mlx, WIN_W, WIN_H);
 	if (!scene->image)
 	{
 		mlx_close_window(scene->mlx);
-		ft_putendl_fd(mlx_strerror(mlx_errno), STDERR_FILENO);
+		ft_putendl_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (-1);
 	}
 	if (mlx_image_to_window(scene->mlx, scene->image, 0, 0) == -1)
 	{
 		mlx_close_window(scene->mlx);
-		ft_putendl_fd(mlx_strerror(mlx_errno), STDERR_FILENO);
+		ft_putendl_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
 		return (-1);
 	}
 	return (1);

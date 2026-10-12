@@ -102,15 +102,17 @@ const char	*parse_cube(t_context *c, char **tok, int n)
 {
 	t_object	*o;
 
-	if (n != 4)
-		return ("cube: expected 'cu x,y,z size r,g,b'");
+	if (n != 5)
+		return ("cube: expected 'cu x,y,z ax,ay,az size r,g,b'");
 	o = &c->scene->objects[c->obj_i];
 	o->type = OBJ_CUBE;
 	if (!parse_point(tok[1], &o->pos))
 		return ("cube: point must be x,y,z");
-	if (!parse_double(tok[2], &o->height) || o->height <= 0.0)
+	if (!parse_unit_vec(tok[2], &o->axis))
+		return ("cube: axis must be a unit vector x,y,z");
+	if (!parse_double(tok[3], &o->height) || o->height <= 0.0)
 		return ("cube: size must be a number > 0");
-	if (!parse_color(tok[3], &o->color))
+	if (!parse_color(tok[4], &o->color))
 		return ("cube: color must be r,g,b integers in [0, 255]");
 	c->obj_i++;
 	return (NULL);

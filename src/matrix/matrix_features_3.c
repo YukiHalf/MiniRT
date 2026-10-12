@@ -72,7 +72,6 @@ double	deter_m3(const double m[static 3][3])
 {
 	double	deter;
 	int		i;
-	int		k;
 
 	i = 0;
 	deter = 0;

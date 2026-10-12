@@ -13,14 +13,15 @@
 #include "world.h"
 #include <stdio.h>
 
-static bool	is_shadowed(t_tuple point, t_rt_scene *scene, t_intersections *xs)
+static bool	is_shadowed(t_tuple point, t_light *light, const t_rt_scene *scene,
+	t_intersections *xs)
 {
 	double			distance;
 	t_tuple			shadow;
 	t_ray			ray;
 	t_intersection	*h;
 
-	shadow = subst_tup(scene->lights[0].pos, point);
+	shadow = subst_tup(light->pos, point);
 	distance = magn_tup(shadow);
 	ray = init_ray(point, norm_tup(shadow));
 	xs->count = 0;
@@ -32,16 +33,26 @@ static bool	is_shadowed(t_tuple point, t_rt_scene *scene, t_intersections *xs)
 t_rgb	shade_hit(const t_rt_scene *world, t_comps comps, t_intersections *xs)
 {
 	t_lighting_parms	parms;
+	t_rgb				total;
+	int					i;
 
 	parms.m = comps.object->material;
 	parms.obj = comps.object;
-	parms.l = world->lights[0];
-	parms.ambient_color = world->ambient.color;
 	parms.pos = comps.point;
 	parms.eyev = comps.eyev;
 	parms.normalv = comps.normalv;
-	parms.in_shadow = is_shadowed(comps.over_point, world, xs);
-	return (lighting(parms));
+	parms.ambient_color = world->ambient.color;
+	parms.m.ambient = 0.0;
+	total = mult_scalar_rgb(parms.m.color, comps.object->material.ambient);
+	i = 0;
+	while (i < world->light_count)
+	{
+		parms.l = world->lights[i];
+		parms.in_shadow = is_shadowed(comps.over_point, &parms.l, world, xs);
+		total = add_rgb(total, lighting(parms));
+		i++;
+	}
+	return (total);
 }
 
 t_rgb	color_at(const t_rt_scene *world, const t_ray *ray, t_intersections *xs)

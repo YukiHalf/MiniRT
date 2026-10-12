@@ -47,7 +47,7 @@ static t_tuple	cyl_helper(t_object shape, t_tuple local_point)
 	return (init_vector(local_point.x, 0, local_point.z));
 }
 
-static t_tuple	cube_helper(t_object shape, t_tuple local_point)
+static t_tuple	cube_helper(t_tuple local_point)
 {
 	double	maxc;
 
@@ -69,7 +69,7 @@ t_tuple	local_normal_at(t_object shape, t_tuple local_point)
 	if (shape.type == OBJ_PLANE)
 		return (init_vector(0, 1, 0));
 	if (shape.type == OBJ_CUBE)
-		return (cube_helper(shape, local_point));
+		return (cube_helper(local_point));
 	if (shape.type == OBJ_CYLINDER)
 		return (cyl_helper(shape, local_point));
 	if (shape.type == OBJ_CONE)

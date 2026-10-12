@@ -58,7 +58,7 @@ const char	*parse_light(t_context *c, char **tok, int n)
 	if (n != 4)
 		return ("light: expected 'L x,y,z brightness r,g,b'");
 	if (c->light_i >= MAX_LIGHTS)
-		return ("light: 'L' can only be declared once");
+		return ("light: 'L' can be declared maximum of 3 times");
 	l = &c->scene->lights[c->light_i];
 	if (!parse_point(tok[1], &l->pos))
 		return ("light: position must be x,y,z");

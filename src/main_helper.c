@@ -47,10 +47,12 @@ void	prepare_cube(t_object *o)
 {
 	t_mat4	move;
 	t_mat4	scale;
+	t_mat4	spin;
 
 	move = init_translation(o->pos.x, o->pos.y, o->pos.z);
 	scale = init_scaling(o->height / 2.0, o->height / 2.0, o->height / 2.0);
-	set_transform(o, multy_m4(move.m, scale.m));
+	spin = axis_rotation(norm_tup(o->axis));
+	set_transform(o, multy_m4(move.m, multy_m4(spin.m, scale.m).m));
 }
 
 /*chapter 13 cylinder: radius 1 along +y; the height stays a field because

@@ -21,7 +21,7 @@
 # include <stdbool.h>
 # include <stddef.h>
 
-# define MAX_LIGHTS 1
+# define MAX_LIGHTS 3
 # define MAX_TOKENS 8
 
 typedef struct s_context
