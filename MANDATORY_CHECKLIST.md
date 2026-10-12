@@ -148,9 +148,9 @@ Ordinary side crossings `2,4`, inside `-1,1`, tangency `3,3`, height clipping, c
 
 Files: `src/camera.c`, `src/main.c` (`world_setup()`), `src/matrix/`, `src/hooks.c`.
 
-Fresh results: `+X` gives `-X`, `-X` gives `+X`, and `+Y` with the application's fallback up vector gives `-Y`; `+Z/-Z` pass. A near-up requested direction produced approximately `(0,-.7071,-.7071)` instead. All seven tested translated origins remained `(3,4,5)`. Requested horizontal FOV 90 degrees produced 90 in landscape/square and 53.130102 in portrait. The singular inverse of scaling `(0,1,1)` contained zero finite entries out of 16. The ordinary window resize smoke passed presentation, not camera correctness.
+Previous audit results (before subsequent fixes): `+X` gave `-X`, `-X` gave `+X`, and `+Y` with the application's fallback up vector gave `-Y`; `+Z/-Z` passed. A near-up requested direction produced approximately `(0,-.7071,-.7071)` instead. All seven tested translated origins remained `(3,4,5)`. Requested horizontal FOV 90 degrees produced 90 in landscape/square and 53.130102 in portrait. The singular inverse of scaling `(0,1,1)` contained zero finite entries out of 16. The ordinary window resize smoke passed presentation, not camera correctness. Update: the user removed the extra orientation inversion and reported that the center-ray tests now pass; that specific fix is checked below.
 
-- [ ] Correct `view_transform()` so the center ray follows the requested camera direction. The audit requested `+X` and observed a center ray pointing approximately `-X`.
+- [x] Correct `view_transform()` so the center ray follows the requested camera direction. Evidence: user removed the extra orientation inversion and reported passing center-ray tests. Near-up basis, image placement, and horizontal FOV remain separate checks.
 - [ ] Build a valid camera basis for arbitrary normalized directions, including directions parallel or nearly parallel to the usual up vector.
 - [ ] Verify camera translation, rotation, and left/right/up/down image placement with an asymmetric scene.
 - [ ] Keep the requested FOV horizontal for every aspect ratio. The audit requested `90` degrees at `200x400` and measured approximately `53.13` degrees horizontally.

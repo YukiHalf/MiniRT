@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:18:12 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/12 09:42:06 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/12 09:58:18 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,7 @@ void	camera_init(t_cam *cam, int hsize, int vsize, double field_of_view)
 	cam->vsize = vsize;
 	cam->field_of_view = field_of_view;
 	cam->half_width = half_view;
-	cam->half_height = half_view;
-	if (aspect >= 1.0)
-		cam->half_height = half_view / aspect;
-	else
-		cam->half_width = half_view * aspect;
+	cam->half_height = half_view / aspect;
 	cam->pixel_size = (cam->half_width * 2.0) / (double)hsize;
 	cam->transform = init_identy_m4();
 }
