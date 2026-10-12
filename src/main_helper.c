@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/09 10:29:16 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/09 10:33:13 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/12 10:41:08 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,12 @@ void	prepare_cylinder(t_object *o)
 	t_mat4	move;
 	t_mat4	spin;
 	t_mat4	scale;
+	t_tuple	base;
 
+	base = subst_tup(o->pos, multy_tup_return(norm_tup(o->axis), o->height
+				/ 2.0));
 	spin = axis_rotation(norm_tup(o->axis));
-	move = init_translation(o->pos.x, o->pos.y, o->pos.z);
+	move = init_translation(base.x, base.y, base.z);
 	scale = init_scaling(o->radius, 1.0, o->radius);
 	set_transform(o, multy_m4(move.m, multy_m4(spin.m, scale.m).m));
 	o->pos = init_point(0, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: sdarius- <sdarius-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 13:18:35 by sdarius-          #+#    #+#             */
-/*   Updated: 2026/10/08 13:18:36 by sdarius-         ###   ########.fr       */
+/*   Updated: 2026/10/12 10:36:24 by sdarius-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	loop_hook(void *param)
 	t_app	*app;
 
 	app = param;
+	if (app->width != app->mlx->width || app->height != app->mlx->height)
+		resize_hook(app->mlx->width, app->mlx->height, app);
 	if (app->resize_pending)
 		apply_resize(app);
 	render_step(app);
